@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --border: #E2E8F0;
+  --brand: #2563EB;
+  --brand-hover: #1D4ED8;
+  --brand-text-light: #2563EB;
+  --success: #10B981;
+  --error: #EF4444;
+}
+
+.dark {
+  --background: #090A0F;
+  --surface: #11131F;
+  --surface-secondary: #181B2C;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --border: #1E2438;
+  --brand: #2563EB;
+  --brand-hover: #1D4ED8;
+  --brand-text-light: #3B82F6;
+  --success: #10B981;
+  --error: #F87171;
+}
+
+@layer base {
+  html, body, h1, h2, h3, h4, h5, h6, input, button, select, textarea {
+    font-family: 'Inter', var(--font-inter), system-ui, -apple-system, sans-serif !important;
+  }
+  body {
+    @apply antialiased font-sans bg-slate-50 dark:bg-[#090A0F] text-slate-900 dark:text-zinc-100 transition-colors duration-200 min-h-screen flex flex-col;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Skeleton Pulse Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: rgba(226, 232, 240, 0.7);
+  animation: shimmer 1.5s infinite;
+}
+
+.dark .skeleton-shimmer {
+  background: rgba(30, 36, 56, 0.7);
+  animation: shimmer 1.5s infinite;
+}
+
+/* Transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Royal Blue Logo Brand Styling Helpers */
+.brand-text {
+  @apply text-[#2563EB] dark:text-[#3B82F6] font-bold;
+}
+
+.brand-bg {
+  @apply bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold shadow-md shadow-[#2563EB]/20;
+}
+
+
+
+/* Custom Minimal Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+
+
