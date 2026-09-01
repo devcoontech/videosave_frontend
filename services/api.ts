@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { MediaInfo, DownloadJob, PlaylistInfo } from '../src/types/media';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+const envApiUrl = typeof process !== 'undefined' ? process.env?.NEXT_PUBLIC_API_URL : undefined;
+const API_BASE_URL = envApiUrl
+  ? (envApiUrl.endsWith('/api') ? envApiUrl : `${envApiUrl.replace(/\/$/, '')}/api`)
+  : '/api';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

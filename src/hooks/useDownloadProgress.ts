@@ -44,23 +44,34 @@ export function useDownloadProgress(jobId: string | null) {
       }, 1000);
     };
 
-    // Construct WebSocket URL dynamically (supports Render / Vercel / local dev)
+    // Construct production-safe WebSocket URL (supports HTTPS/WSS, custom domains, local dev)
     let wsUrl: string;
+    const envWsUrl = process.env.NEXT_PUBLIC_WS_URL;
     const envApiUrl = process.env.NEXT_PUBLIC_API_URL;
-    if (envApiUrl && envApiUrl.startsWith('http')) {
+    if (envWsUrl) {
+      wsUrl = `${envWsUrl.replace(/\/$/, '')}/ws/download/${jobId}`;
+    } else if (envApiUrl && envApiUrl.startsWith('http')) {
       try {
         const parsedUrl = new URL(envApiUrl);
         const wsProtocol = parsedUrl.protocol === 'https:' ? 'wss:' : 'ws:';
         wsUrl = `${wsProtocol}//${parsedUrl.host}/ws/download/${jobId}`;
       } catch (e) {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const hostname = window.location.hostname || '127.0.0.1';
-        wsUrl = `${protocol}//${hostname}:8000/ws/download/${jobId}`;
+        if (window.location.port === '3000' || window.location.port === '5173') {
+          wsUrl = `${protocol}//${window.location.hostname}:8000/ws/download/${jobId}`;
+        } else {
+          wsUrl = `${protocol}//${window.location.host}/ws/download/${jobId}`;
+        }
+      }
+    } else if (typeof window !== 'undefined') {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      if (window.location.port === '3000' || window.location.port === '5173') {
+        wsUrl = `${protocol}//${window.location.hostname}:8000/ws/download/${jobId}`;
+      } else {
+        wsUrl = `${protocol}//${window.location.host}/ws/download/${jobId}`;
       }
     } else {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const hostname = window.location.hostname || '127.0.0.1';
-      wsUrl = `${protocol}//${hostname}:8000/ws/download/${jobId}`;
+      wsUrl = `ws://127.0.0.1:8000/ws/download/${jobId}`;
     }
 
     try {

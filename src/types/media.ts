@@ -65,6 +65,7 @@ export interface DownloadJob {
   filename?: string;
   filepath?: string;
   error?: string;
+  queue_position?: number;
 }
 
 export interface DownloadProgressEvent {
@@ -77,6 +78,7 @@ export interface DownloadProgressEvent {
   total_bytes?: number;
   filename?: string;
   error?: string;
+  queue_position?: number;
 }
 
 export interface ApiError {
