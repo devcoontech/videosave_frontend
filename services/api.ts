@@ -8,20 +8,38 @@ const API_BASE_URL = envApiUrl
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
+  timeout: 180000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+function throwApiError(error: any, fallbackCode: string, fallbackMessage: string): never {
+  const detail = error?.response?.data?.detail;
+  if (detail && typeof detail === 'object' && !Array.isArray(detail) && (detail.code || detail.message)) {
+    throw {
+      code: detail.code || fallbackCode,
+      message: detail.message || fallbackMessage,
+    };
+  }
+  if (Array.isArray(detail) && detail[0]?.msg) {
+    throw { code: fallbackCode, message: detail[0].msg };
+  }
+  if (typeof detail === 'string') {
+    throw { code: fallbackCode, message: detail };
+  }
+  throw {
+    code: error?.code === 'ECONNABORTED' ? 'REQUEST_TIMEOUT' : fallbackCode,
+    message: error?.message || fallbackMessage,
+  };
+}
 
 export async function getMediaInfo(url: string): Promise<MediaInfo> {
   try {
     const response = await apiClient.post<MediaInfo>('/media/info', { url });
     return response.data;
   } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw error.response.data.detail;
-    }
-    throw { code: 'NETWORK_ERROR', message: 'Unable to connect to the backend server.' };
+    throwApiError(error, 'NETWORK_ERROR', 'Unable to connect to the backend server.');
   }
 }
 
@@ -33,10 +51,7 @@ export async function createDownload(url: string, formatId: string): Promise<{ s
     });
     return response.data;
   } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw error.response.data.detail;
-    }
-    throw { code: 'DOWNLOAD_FAILED', message: 'Failed to initialize download request.' };
+    throwApiError(error, 'DOWNLOAD_FAILED', 'Failed to initialize download request.');
   }
 }
 
@@ -45,10 +60,7 @@ export async function getDownloadStatus(jobId: string): Promise<DownloadJob> {
     const response = await apiClient.get<DownloadJob>(`/download/${jobId}`);
     return response.data;
   } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw error.response.data.detail;
-    }
-    throw { code: 'STATUS_CHECK_FAILED', message: 'Could not retrieve job status.' };
+    throwApiError(error, 'STATUS_CHECK_FAILED', 'Could not retrieve job status.');
   }
 }
 
@@ -57,10 +69,7 @@ export async function getPlaylistInfo(url: string): Promise<PlaylistInfo> {
     const response = await apiClient.post<PlaylistInfo>('/playlist/info', { url });
     return response.data;
   } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw error.response.data.detail;
-    }
-    throw { code: 'PLAYLIST_FAILED', message: 'Could not extract playlist entries.' };
+    throwApiError(error, 'PLAYLIST_FAILED', 'Could not extract playlist entries.');
   }
 }
 
@@ -80,10 +89,7 @@ export async function createPlaylistDownload(
     });
     return response.data;
   } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw error.response.data.detail;
-    }
-    throw { code: 'PLAYLIST_DOWNLOAD_FAILED', message: 'Failed to start playlist batch download.' };
+    throwApiError(error, 'PLAYLIST_DOWNLOAD_FAILED', 'Failed to start playlist batch download.');
   }
 }
 
@@ -92,10 +98,7 @@ export async function cancelPlaylistDownload(playlistJobId: string): Promise<{ s
     const response = await apiClient.post<{ success: boolean; message: string }>(`/playlist/job/${playlistJobId}/cancel`);
     return response.data;
   } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw error.response.data.detail;
-    }
-    throw { code: 'CANCEL_FAILED', message: 'Failed to cancel playlist download.' };
+    throwApiError(error, 'CANCEL_FAILED', 'Failed to cancel playlist download.');
   }
 }
 

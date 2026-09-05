@@ -57,8 +57,11 @@ export const PlaylistClient: React.FC = () => {
       setSelectedUrls(data.videos.map((v) => v.url));
     } catch (err: any) {
       setError({
-        code: err.code || 'PLAYLIST_FAILED',
-        message: err.message || 'Failed to fetch playlist details.',
+        code: typeof err?.code === 'string' ? err.code : 'PLAYLIST_FAILED',
+        message:
+          typeof err?.message === 'string' && err.message
+            ? err.message
+            : 'Failed to fetch playlist details. Check the URL and try again.',
       });
     } finally {
       setLoading(false);
@@ -176,7 +179,7 @@ export const PlaylistClient: React.FC = () => {
       <div className="bg-white dark:bg-[#11131F] border border-slate-200/90 dark:border-zinc-800/90 rounded-3xl p-6 sm:p-9 shadow-xl shadow-slate-200/50 dark:shadow-2xl dark:shadow-black/50 space-y-6">
         <UrlInput
           placeholder="Paste YouTube playlist link..."
-          exampleUrl="https://www.youtube.com/playlist?list=PL123456789"
+          exampleUrl="https://www.youtube.com/playlist?list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf"
           buttonLabel="Fetch Playlist"
           isLoading={loading}
           onSubmit={handleFetchPlaylist}

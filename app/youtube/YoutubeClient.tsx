@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { UrlInput } from '../../src/components/UrlInput';
 import { MediaPreview } from '../../src/components/MediaPreview';
 import { QualitySelector } from '../../src/components/QualitySelector';
-import { DownloadButton } from '../../src/components/DownloadButton';
 import { ProgressBar } from '../../src/components/ProgressBar';
 import { ErrorMessage } from '../../src/components/ErrorMessage';
 import { SkeletonLoader } from '../../src/components/SkeletonLoader';
 import { PlatformIcon } from '../../src/components/PlatformIcon';
 import { useMediaInfo } from '../../src/hooks/useMediaInfo';
 import { useDownloadProgress } from '../../src/hooks/useDownloadProgress';
-import { createDownload, getDownloadFileUrl } from '../../services/api';
+import { useAutoFileDownload } from '../../src/hooks/useAutoFileDownload';
+import { createDownload } from '../../services/api';
 import { validateUrlForPlatform } from '../../src/utils/helpers';
 
 export const YoutubeClient: React.FC = () => {
@@ -19,26 +19,9 @@ export const YoutubeClient: React.FC = () => {
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<{ code: string; message: string } | null>(null);
-  const autoDownloadedJobRef = useRef<string | null>(null);
 
   const { progressData } = useDownloadProgress(activeJobId);
-
-  useEffect(() => {
-    if (
-      progressData?.status === 'completed' &&
-      activeJobId &&
-      autoDownloadedJobRef.current !== activeJobId
-    ) {
-      autoDownloadedJobRef.current = activeJobId;
-      const downloadUrl = getDownloadFileUrl(activeJobId);
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = '';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }, [progressData, activeJobId]);
+  useAutoFileDownload(activeJobId, progressData);
 
   const handleFetch = (url: string) => {
     const check = validateUrlForPlatform(url, 'youtube');
@@ -51,7 +34,6 @@ export const YoutubeClient: React.FC = () => {
     }
     setActiveJobId(null);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
     fetchInfo(url);
   };
 
@@ -59,7 +41,6 @@ export const YoutubeClient: React.FC = () => {
     if (!mediaInfo) return;
     setSelectedFormatId(formatId);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
 
     try {
       const res = await createDownload(mediaInfo.webpage_url, formatId);
@@ -77,7 +58,6 @@ export const YoutubeClient: React.FC = () => {
   const handleResetAll = () => {
     setActiveJobId(null);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
     resetInfo();
   };
 

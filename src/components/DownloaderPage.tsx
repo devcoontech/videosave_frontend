@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useMediaInfo } from '../hooks/useMediaInfo';
 import { useDownloadProgress } from '../hooks/useDownloadProgress';
-import { createDownload, getDownloadFileUrl } from '../services/api';
+import { useAutoFileDownload } from '../hooks/useAutoFileDownload';
+import { createDownload } from '../services/api';
 import { UrlInput } from './UrlInput';
 import { MediaPreview } from './MediaPreview';
 import { QualitySelector } from './QualitySelector';
@@ -35,33 +36,13 @@ export const DownloaderPage: React.FC<DownloaderPageProps> = ({
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<{ code: string; message: string } | null>(null);
-  const autoDownloadedJobRef = useRef<string | null>(null);
 
   const { progressData } = useDownloadProgress(activeJobId);
-
-  // Auto-download file directly to user device once processing completes
-  useEffect(() => {
-    if (
-      progressData?.status === 'completed' &&
-      progressData?.job_id === activeJobId &&
-      activeJobId &&
-      autoDownloadedJobRef.current !== activeJobId
-    ) {
-      autoDownloadedJobRef.current = activeJobId;
-      const downloadUrl = getDownloadFileUrl(activeJobId);
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = '';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }, [progressData, activeJobId]);
+  useAutoFileDownload(activeJobId, progressData);
 
   const handleFetch = (url: string) => {
     setActiveJobId(null);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
     fetchInfo(url);
   };
 
@@ -69,7 +50,6 @@ export const DownloaderPage: React.FC<DownloaderPageProps> = ({
     if (!mediaInfo) return;
     setSelectedFormatId(formatId);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
 
     try {
       const res = await createDownload(mediaInfo.webpage_url, formatId);
@@ -91,7 +71,6 @@ export const DownloaderPage: React.FC<DownloaderPageProps> = ({
   const handleResetAll = () => {
     setActiveJobId(null);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
     resetInfo();
   };
 

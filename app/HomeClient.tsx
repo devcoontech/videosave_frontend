@@ -1,18 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PlatformSelector } from '../src/components/PlatformSelector';
 import { UrlInput } from '../src/components/UrlInput';
 import { MediaPreview } from '../src/components/MediaPreview';
 import { QualitySelector } from '../src/components/QualitySelector';
-import { DownloadButton } from '../src/components/DownloadButton';
 import { ProgressBar } from '../src/components/ProgressBar';
 import { ErrorMessage } from '../src/components/ErrorMessage';
 import { SkeletonLoader } from '../src/components/SkeletonLoader';
 import { useMediaInfo } from '../src/hooks/useMediaInfo';
 import { useDownloadProgress } from '../src/hooks/useDownloadProgress';
-import { createDownload, getDownloadFileUrl } from '../services/api';
+import { useAutoFileDownload } from '../src/hooks/useAutoFileDownload';
+import { createDownload } from '../services/api';
+import { isYoutubePlaylistUrl } from '../src/utils/helpers';
 
 export const HomeClient: React.FC = () => {
   const router = useRouter();
@@ -21,37 +22,19 @@ export const HomeClient: React.FC = () => {
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<{ code: string; message: string } | null>(null);
-  const autoDownloadedJobRef = useRef<string | null>(null);
 
   const { progressData } = useDownloadProgress(activeJobId);
-
-  useEffect(() => {
-    if (
-      progressData?.status === 'completed' &&
-      activeJobId &&
-      autoDownloadedJobRef.current !== activeJobId
-    ) {
-      autoDownloadedJobRef.current = activeJobId;
-      const downloadUrl = getDownloadFileUrl(activeJobId);
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = '';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }, [progressData, activeJobId]);
+  useAutoFileDownload(activeJobId, progressData);
 
   const handleFetch = (url: string) => {
     // If playlist link detected, navigate to youtube-playlist route
-    if (url.toLowerCase().includes('list=') || url.toLowerCase().includes('playlist')) {
+    if (isYoutubePlaylistUrl(url)) {
       router.push(`/youtube-playlist?url=${encodeURIComponent(url)}`);
       return;
     }
 
     setActiveJobId(null);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
     fetchInfo(url);
   };
 
@@ -66,7 +49,6 @@ export const HomeClient: React.FC = () => {
     if (!mediaInfo) return;
     setSelectedFormatId(formatId);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
 
     try {
       const res = await createDownload(mediaInfo.webpage_url, formatId);
@@ -84,7 +66,6 @@ export const HomeClient: React.FC = () => {
   const handleResetAll = () => {
     setActiveJobId(null);
     setDownloadError(null);
-    autoDownloadedJobRef.current = null;
     resetInfo();
   };
 

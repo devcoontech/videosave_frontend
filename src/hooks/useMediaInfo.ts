@@ -16,14 +16,12 @@ export function useMediaInfo() {
       const data = await getMediaInfo(url);
       setMediaInfo(data);
     } catch (err: any) {
-      if (err.code && err.message) {
-        setError(err as ApiError);
-      } else {
-        setError({
-          code: 'EXTRACTION_FAILED',
-          message: err.message || 'Failed to fetch media details.',
-        });
-      }
+      const code = typeof err?.code === 'string' ? err.code : 'EXTRACTION_FAILED';
+      const message =
+        typeof err?.message === 'string' && err.message
+          ? err.message
+          : 'Failed to fetch media details. Check the URL and try again.';
+      setError({ code, message });
     } finally {
       setLoading(false);
     }
