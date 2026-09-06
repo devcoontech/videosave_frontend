@@ -16,7 +16,7 @@ import { validateUrlForPlatform } from '../../src/utils/helpers';
 import { downloadProgressLabel } from '../../src/utils/downloadLabels';
 
 export const InstagramClient: React.FC = () => {
-  const { loading, mediaInfo, error, fetchInfo, reset: resetInfo } = useMediaInfo();
+  const { loading, mediaInfo, sourceUrl, error, fetchInfo, reset: resetInfo } = useMediaInfo();
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<{ code: string; message: string } | null>(null);
@@ -44,7 +44,7 @@ export const InstagramClient: React.FC = () => {
     setDownloadError(null);
 
     try {
-      const res = await createDownload(mediaInfo.webpage_url, formatId);
+      const res = await createDownload(sourceUrl || mediaInfo.webpage_url, formatId);
       if (res.success && res.job_id) {
         setActiveJobId(res.job_id);
       }

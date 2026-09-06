@@ -32,7 +32,7 @@ export const DownloaderPage: React.FC<DownloaderPageProps> = ({
   icon: Icon,
   badgeGradient,
 }) => {
-  const { loading, mediaInfo, error, fetchInfo, reset: resetInfo } = useMediaInfo();
+  const { loading, mediaInfo, sourceUrl, error, fetchInfo, reset: resetInfo } = useMediaInfo();
 
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
@@ -53,7 +53,7 @@ export const DownloaderPage: React.FC<DownloaderPageProps> = ({
     setDownloadError(null);
 
     try {
-      const res = await createDownload(mediaInfo.webpage_url, formatId);
+      const res = await createDownload(sourceUrl || mediaInfo.webpage_url, formatId);
       if (res.success && res.job_id) {
         setActiveJobId(res.job_id);
       }

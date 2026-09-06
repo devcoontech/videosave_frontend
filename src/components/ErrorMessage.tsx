@@ -25,7 +25,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, onRetry }) =>
       case 'GEO_RESTRICTED':
         return 'This content is restricted in your area.';
       case 'BOT_VERIFICATION_REQUIRED':
-        return 'YouTube security check triggered. Please try clicking Try Again or test another YouTube video.';
+        return 'YouTube blocked the server IP. Wait a minute and retry, or ask the admin to add cookies.txt on the server.';
       case 'LOGIN_REQUIRED':
         return 'Age-restricted content requiring account sign-in.';
       default:
