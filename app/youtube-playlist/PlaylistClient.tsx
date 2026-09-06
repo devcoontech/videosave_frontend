@@ -24,6 +24,7 @@ export const PlaylistClient: React.FC = () => {
   const [error, setError] = useState<ApiError | null>(null);
 
   const [playlistJobId, setPlaylistJobId] = useState<string | null>(null);
+  const [playlistSourceUrl, setPlaylistSourceUrl] = useState<string>('');
   const [batchStatus, setBatchStatus] = useState<any | null>(null);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const downloadedJobIdsRef = useRef<Set<string>>(new Set());
@@ -48,6 +49,7 @@ export const PlaylistClient: React.FC = () => {
     setPlaylistInfo(null);
     setSelectedUrls([]);
     setPlaylistJobId(null);
+    setPlaylistSourceUrl(url);
     setBatchStatus(null);
     downloadedJobIdsRef.current.clear();
 
@@ -90,7 +92,12 @@ export const PlaylistClient: React.FC = () => {
     setIsDownloading(true);
 
     try {
-      const res = await createPlaylistDownload(playlistInfo.title, selectedUrls, quality, playlistJobId);
+      const res = await createPlaylistDownload(
+        playlistSourceUrl || playlistInfo.title,
+        selectedUrls,
+        quality,
+        playlistJobId
+      );
       if (res.success && res.playlist_job_id) {
         setPlaylistJobId(res.playlist_job_id);
       }
@@ -148,6 +155,13 @@ export const PlaylistClient: React.FC = () => {
           if (res.data.completed_videos + res.data.failed_videos >= res.data.total_videos) {
             setIsDownloading(false);
             clearInterval(interval);
+            if (res.data.failed_videos > 0 && res.data.completed_videos === 0) {
+              const firstErr = res.data.video_jobs?.find((v: any) => v.error)?.error;
+              setError({
+                code: 'BATCH_FAILED',
+                message: firstErr || `${res.data.failed_videos} video(s) failed to download.`,
+              });
+            }
           }
         }
       } catch (err) {
@@ -230,13 +244,26 @@ export const PlaylistClient: React.FC = () => {
 
             {batchStatus && (
               <ProgressBar
-                overallProgress={batchStatus.overall_progress}
+                overallProgress={
+                  batchStatus.current_video_progress != null && batchStatus.status === 'in_progress'
+                    ? Math.max(
+                        batchStatus.overall_progress || 0,
+                        ((batchStatus.completed_videos + (batchStatus.current_video_progress || 0) / 100) /
+                          batchStatus.total_videos) *
+                          100
+                      )
+                    : batchStatus.overall_progress
+                }
                 label={
                   batchStatus.status === 'cancelled'
-                    ? `🛑 Stopped at video ${batchStatus.completed_videos} of ${batchStatus.total_videos}. Click Resume to continue.`
+                    ? `Stopped at video ${batchStatus.completed_videos} of ${batchStatus.total_videos}. Click Resume to continue.`
                     : batchStatus.completed_videos + batchStatus.failed_videos >= batchStatus.total_videos
-                    ? '✓ Playlist Batch Download Complete!'
-                    : `Downloading & saving ${batchStatus.completed_videos + 1} of ${batchStatus.total_videos} videos...`
+                    ? batchStatus.failed_videos > 0
+                      ? batchStatus.completed_videos > 0
+                        ? `Done: ${batchStatus.completed_videos} saved, ${batchStatus.failed_videos} failed`
+                        : `All ${batchStatus.failed_videos} video(s) failed to download`
+                      : 'Playlist batch download complete!'
+                    : `Downloading video ${batchStatus.completed_videos + 1} of ${batchStatus.total_videos}...`
                 }
               />
             )}
