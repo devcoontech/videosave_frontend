@@ -11,6 +11,7 @@ import { ProgressBar } from './ProgressBar';
 import { ErrorMessage } from './ErrorMessage';
 import { LoadingSpinner } from './LoadingSpinner';
 import { LucideIcon } from 'lucide-react';
+import { downloadProgressLabel } from '../utils/downloadLabels';
 
 interface DownloaderPageProps {
   platform: 'youtube' | 'instagram' | 'facebook';
@@ -133,13 +134,7 @@ export const DownloaderPage: React.FC<DownloaderPageProps> = ({
             {activeJobId && (
               <ProgressBar
                 progress={progressData}
-                label={
-                  progressData?.status === 'completed'
-                    ? '✓ Download Complete'
-                    : progressData?.status === 'processing'
-                    ? '⚡ Merging Video & Audio with FFmpeg...'
-                    : 'Downloading video...'
-                }
+                label={downloadProgressLabel(progressData?.status, selectedFormatId)}
               />
             )}
           </div>

@@ -13,6 +13,7 @@ import { useDownloadProgress } from '../../src/hooks/useDownloadProgress';
 import { useAutoFileDownload } from '../../src/hooks/useAutoFileDownload';
 import { createDownload } from '../../services/api';
 import { validateUrlForPlatform } from '../../src/utils/helpers';
+import { downloadProgressLabel } from '../../src/utils/downloadLabels';
 
 export const InstagramClient: React.FC = () => {
   const { loading, mediaInfo, error, fetchInfo, reset: resetInfo } = useMediaInfo();
@@ -103,11 +104,7 @@ export const InstagramClient: React.FC = () => {
             {activeJobId && (
               <ProgressBar
                 progress={progressData}
-                label={
-                  progressData?.status === 'completed'
-                    ? 'Download ready! Auto-saving file...'
-                    : 'Downloading reel...'
-                }
+                label={downloadProgressLabel(progressData?.status, selectedFormatId)}
               />
             )}
           </div>

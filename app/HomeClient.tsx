@@ -14,6 +14,7 @@ import { useDownloadProgress } from '../src/hooks/useDownloadProgress';
 import { useAutoFileDownload } from '../src/hooks/useAutoFileDownload';
 import { createDownload } from '../services/api';
 import { isYoutubePlaylistUrl } from '../src/utils/helpers';
+import { downloadProgressLabel } from '../src/utils/downloadLabels';
 
 export const HomeClient: React.FC = () => {
   const router = useRouter();
@@ -124,11 +125,7 @@ export const HomeClient: React.FC = () => {
             {activeJobId && (
               <ProgressBar
                 progress={progressData}
-                label={
-                  progressData?.status === 'completed'
-                    ? 'Download ready! Auto-saving file...'
-                    : 'Downloading media file...'
-                }
+                label={downloadProgressLabel(progressData?.status, selectedFormatId)}
               />
             )}
           </div>

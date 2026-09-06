@@ -13,6 +13,7 @@ import { useDownloadProgress } from '../../src/hooks/useDownloadProgress';
 import { useAutoFileDownload } from '../../src/hooks/useAutoFileDownload';
 import { createDownload } from '../../services/api';
 import { validateUrlForPlatform } from '../../src/utils/helpers';
+import { downloadProgressLabel } from '../../src/utils/downloadLabels';
 
 export const YoutubeClient: React.FC = () => {
   const { loading, mediaInfo, error, fetchInfo, reset: resetInfo } = useMediaInfo();
@@ -102,11 +103,7 @@ export const YoutubeClient: React.FC = () => {
             {activeJobId && (
               <ProgressBar
                 progress={progressData}
-                label={
-                  progressData?.status === 'completed'
-                    ? 'Download ready! Auto-saving file...'
-                    : 'Downloading video...'
-                }
+                label={downloadProgressLabel(progressData?.status, selectedFormatId)}
               />
             )}
           </div>

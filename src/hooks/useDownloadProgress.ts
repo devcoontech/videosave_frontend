@@ -13,38 +13,68 @@ export function useDownloadProgress(jobId: string | null) {
       return;
     }
 
-    let pollInterval: any = null;
+    let pollInterval: ReturnType<typeof setInterval> | null = null;
     let isJobFinished = false;
+
+    const applyJob = (job: {
+      id: string;
+      status: DownloadProgressEvent['status'];
+      progress: number;
+      speed?: string;
+      eta?: string;
+      downloaded_bytes: number;
+      total_bytes?: number;
+      filename?: string;
+      error?: string;
+    }) => {
+      setProgressData({
+        job_id: job.id,
+        status: job.status,
+        progress: job.progress,
+        speed: job.speed,
+        eta: job.eta,
+        downloaded_bytes: job.downloaded_bytes,
+        total_bytes: job.total_bytes,
+        filename: job.filename,
+        error: job.error,
+      });
+
+      if (job.status === 'completed' || job.status === 'failed') {
+        isJobFinished = true;
+        if (pollInterval) {
+          clearInterval(pollInterval);
+          pollInterval = null;
+        }
+      }
+    };
+
+    const pollOnce = async () => {
+      if (isJobFinished) return;
+      try {
+        const job = await getDownloadStatus(jobId);
+        applyJob(job);
+      } catch (error: any) {
+        if (error?.code === 'RATE_LIMIT_EXCEEDED' || error?.response?.status === 429) {
+          return;
+        }
+        if (error?.code === 'FILE_NOT_FOUND' || error?.response?.status === 404) {
+          isJobFinished = true;
+          if (pollInterval) {
+            clearInterval(pollInterval);
+            pollInterval = null;
+          }
+        }
+      }
+    };
 
     const startPollingFallback = () => {
       if (pollInterval || isJobFinished) return;
-      pollInterval = setInterval(async () => {
-        try {
-          const job = await getDownloadStatus(jobId);
-          setProgressData({
-            job_id: job.id,
-            status: job.status,
-            progress: job.progress,
-            speed: job.speed,
-            eta: job.eta,
-            downloaded_bytes: job.downloaded_bytes,
-            total_bytes: job.total_bytes,
-            filename: job.filename,
-            error: job.error,
-          });
-
-          if (job.status === 'completed' || job.status === 'failed') {
-            isJobFinished = true;
-            if (pollInterval) clearInterval(pollInterval);
-          }
-        } catch (e) {
-          // If job 404s or server restarted, stop polling
-          if (pollInterval) clearInterval(pollInterval);
-        }
-      }, 1000);
+      void pollOnce();
+      pollInterval = setInterval(() => {
+        void pollOnce();
+      }, 1500);
     };
 
-    // Construct production-safe WebSocket URL (supports HTTPS/WSS, custom domains, local dev)
     let wsUrl: string;
     const envWsUrl = process.env.NEXT_PUBLIC_WS_URL;
     const envApiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -74,6 +104,8 @@ export function useDownloadProgress(jobId: string | null) {
       wsUrl = `ws://127.0.0.1:8000/ws/download/${jobId}`;
     }
 
+    startPollingFallback();
+
     try {
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
@@ -88,7 +120,10 @@ export function useDownloadProgress(jobId: string | null) {
           setProgressData(data);
           if (data.status === 'completed' || data.status === 'failed') {
             isJobFinished = true;
-            if (pollInterval) clearInterval(pollInterval);
+            if (pollInterval) {
+              clearInterval(pollInterval);
+              pollInterval = null;
+            }
           }
         } catch (e) {
           console.error('Failed to parse WebSocket progress payload', e);
@@ -97,17 +132,13 @@ export function useDownloadProgress(jobId: string | null) {
 
       ws.onerror = () => {
         setIsConnected(false);
-        startPollingFallback();
       };
 
       ws.onclose = () => {
         setIsConnected(false);
-        if (!isJobFinished) {
-          startPollingFallback();
-        }
       };
     } catch (e) {
-      startPollingFallback();
+      // Polling already started
     }
 
     return () => {

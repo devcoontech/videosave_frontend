@@ -215,6 +215,7 @@ export const PlaylistClient: React.FC = () => {
                   <option value="480p">480p (Standard)</option>
                   <option value="360p">360p (Small)</option>
                   <option value="240p">240p (Low)</option>
+                  <option value="mp3">MP3 Audio</option>
                 </select>
               </div>
             </div>
