@@ -25,7 +25,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, onRetry }) =>
       case 'GEO_RESTRICTED':
         return 'This content is restricted in your area.';
       case 'BOT_VERIFICATION_REQUIRED':
-        return 'YouTube blocked the server IP. Wait a minute and retry, or ask the admin to add cookies.txt on the server.';
+        return error.message || 'YouTube blocked the server. Wait a minute and retry, or check /api/health on the backend.';
       case 'LOGIN_REQUIRED':
         return 'Age-restricted content requiring account sign-in.';
       default:
@@ -38,7 +38,9 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, onRetry }) =>
       <AlertCircle className="w-5 h-5 shrink-0 text-[#DC2626] dark:text-red-400 mt-0.5" />
       <div className="flex-1 space-y-0.5">
         <h5 className="font-bold text-sm text-red-900 dark:text-red-200">
-          We couldn't fetch this video
+          {error.code === 'BOT_VERIFICATION_REQUIRED' || error.code === 'DOWNLOAD_FAILED'
+            ? 'Download unavailable'
+            : "We couldn't fetch this video"}
         </h5>
         <p className="text-xs text-red-700 dark:text-red-300 font-medium">
           {error.message || getFriendlyDetails(error.code)}
