@@ -103,7 +103,11 @@ export const YoutubeClient: React.FC = () => {
             {activeJobId && (
               <ProgressBar
                 progress={progressData}
-                label={downloadProgressLabel(progressData?.status, selectedFormatId)}
+                label={downloadProgressLabel(
+                  progressData?.status,
+                  selectedFormatId,
+                  progressData?.error,
+                )}
               />
             )}
           </div>

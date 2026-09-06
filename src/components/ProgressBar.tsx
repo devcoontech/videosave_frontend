@@ -59,6 +59,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 
 
       {/* Progress metadata stats */}
+      {progress && progress.status === 'failed' && progress.error && (
+        <p className="text-xs text-rose-600 dark:text-rose-400 font-medium leading-relaxed">
+          {progress.error}
+        </p>
+      )}
       {progress && (
         <div className="flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-zinc-400 gap-2 pt-1 font-medium">
           {progress.speed && (
