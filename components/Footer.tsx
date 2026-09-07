@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
               Platform Downloaders
             </h4>
             <ul className="space-y-2 text-xs font-medium">
-              <li>
+              {/* <li>
                 <Link href="/youtube" className="inline-flex items-center gap-2 text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
                   <PlatformIcon platform="youtube" className="w-3.5 h-3.5" />
                   YouTube Video Downloader
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
                   <PlatformIcon platform="youtube_playlist" className="w-3.5 h-3.5" />
                   YouTube Playlist Downloader
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/instagram" className="inline-flex items-center gap-2 text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
                   <PlatformIcon platform="instagram" className="w-3.5 h-3.5" />

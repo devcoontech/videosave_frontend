@@ -14,8 +14,8 @@ export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   const navItems = [
-    { label: 'YouTube', path: '/youtube', platform: 'youtube' },
-    { label: 'Playlist', path: '/youtube-playlist', platform: 'youtube_playlist' },
+    // { label: 'YouTube', path: '/youtube', platform: 'youtube' },
+    // { label: 'Playlist', path: '/youtube-playlist', platform: 'youtube_playlist' },
     { label: 'Instagram', path: '/instagram', platform: 'instagram' },
     { label: 'Facebook', path: '/facebook', platform: 'facebook' },
     { label: 'TikTok', path: '/tiktok', platform: 'tiktok' },

@@ -18,7 +18,7 @@ import { downloadProgressLabel } from '../src/utils/downloadLabels';
 
 export const HomeClient: React.FC = () => {
   const router = useRouter();
-  const [platform, setPlatform] = useState<string>('youtube');
+  const [platform, setPlatform] = useState<string>('instagram');
   const { loading, mediaInfo, sourceUrl, error, fetchInfo, reset: resetInfo } = useMediaInfo();
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
@@ -29,10 +29,10 @@ export const HomeClient: React.FC = () => {
 
   const handleFetch = (url: string) => {
     // If playlist link detected, navigate to youtube-playlist route
-    if (isYoutubePlaylistUrl(url)) {
-      router.push(`/youtube-playlist?url=${encodeURIComponent(url)}`);
-      return;
-    }
+    // if (isYoutubePlaylistUrl(url)) {
+    //   router.push(`/youtube-playlist?url=${encodeURIComponent(url)}`);
+    //   return;
+    // }
 
     setActiveJobId(null);
     setDownloadError(null);
@@ -83,12 +83,9 @@ export const HomeClient: React.FC = () => {
           </span>
         </h1>
         <p className="text-base sm:text-lg text-slate-600 dark:text-zinc-400 font-medium max-w-xl mx-auto">
-          Fast, free online downloader for YouTube, Playlists, Instagram, and Facebook.
+          Fast, free online downloader for Instagram, Facebook, and TikTok.
         </p>
       </div>
-
-
-
 
       {/* Main Glass Downloader Card */}
       <div className="bg-white dark:bg-[#11131F] border border-slate-200/90 dark:border-zinc-800/90 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/50 dark:shadow-2xl dark:shadow-black/50 space-y-6">
@@ -97,10 +94,10 @@ export const HomeClient: React.FC = () => {
         <UrlInput
           placeholder={`Paste ${platform.replace('_', ' ')} link...`}
           exampleUrl={
-            platform === 'youtube'
-              ? 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-              : platform === 'instagram'
+            platform === 'instagram'
               ? 'https://www.instagram.com/reel/C123456789/'
+              : platform === 'tiktok'
+              ? 'https://www.tiktok.com/@user/video/123456789'
               : 'https://www.facebook.com/reel/123456789/'
           }
           buttonLabel="Fetch Media"

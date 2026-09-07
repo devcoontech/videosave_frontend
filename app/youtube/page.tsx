@@ -59,8 +59,18 @@ export default function YoutubePage() {
     <div className="space-y-16 py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <JsonLd data={breadcrumbSchema} />
 
-      {/* Downloader Client Tool */}
-      <YoutubeClient />
+      {/* Maintenance Notice for YouTube */}
+      <div className="bg-amber-500/10 border border-amber-500/30 rounded-3xl p-8 text-center space-y-3 max-w-3xl mx-auto">
+        <h2 className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+          YouTube Downloader Under Maintenance
+        </h2>
+        <p className="text-sm text-slate-600 dark:text-zinc-300 max-w-xl mx-auto">
+          We are currently updating our YouTube engine for enhanced performance. Please use our <strong>Instagram</strong>, <strong>Facebook</strong>, or <strong>TikTok</strong> downloader in the meantime!
+        </p>
+      </div>
+
+      {/* Downloader Client Tool (Temporarily commented out) */}
+      {/* <YoutubeClient /> */}
 
       {/* Comprehensive SEO Content Section for YouTube Downloader */}
       <section className="max-w-5xl mx-auto space-y-12 py-8 border-t border-slate-200 dark:border-[#1E2436]">

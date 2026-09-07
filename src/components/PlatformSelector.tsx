@@ -13,8 +13,8 @@ export const PlatformSelector: React.FC<PlatformSelectorProps> = ({
   onSelectPlatform,
 }) => {
   const platforms: { id: PlatformType; label: string }[] = [
-    { id: 'youtube', label: 'YouTube' },
-    { id: 'youtube_playlist', label: 'Playlist' },
+    // { id: 'youtube', label: 'YouTube' },
+    // { id: 'youtube_playlist', label: 'Playlist' },
     { id: 'instagram', label: 'Instagram' },
     { id: 'facebook', label: 'Facebook' },
     { id: 'tiktok', label: 'TikTok' },
