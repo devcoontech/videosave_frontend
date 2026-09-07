@@ -85,7 +85,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     <div className="w-full space-y-3">
       <form onSubmit={handleSubmit} noValidate className="w-full">
         <div className="flex flex-col sm:flex-row items-stretch gap-2.5 p-2 rounded-2xl bg-slate-50/80 dark:bg-[#0B0D14] border border-slate-200 dark:border-zinc-800 focus-within:border-[#2563EB] dark:focus-within:border-[#3B82F6] focus-within:ring-4 focus-within:ring-[#2563EB]/15 transition-all duration-200 shadow-inner">
-          <div className="relative flex-1 flex items-center min-h-[48px]">
+          <div className="relative flex-1 flex items-center min-h-[50px]">
             <Link2 className="w-5 h-5 text-slate-400 dark:text-zinc-500 absolute left-3.5 pointer-events-none shrink-0" />
             <input
               type="text"
@@ -98,7 +98,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               }}
               placeholder={placeholder}
               disabled={isLoading}
-              className="w-full pl-11 pr-20 py-3 text-sm font-medium bg-transparent text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none disabled:opacity-50"
+              className="w-full pl-11 pr-24 py-3 text-base sm:text-sm font-medium bg-transparent text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none disabled:opacity-50"
             />
             {url ? (
               <button
@@ -108,7 +108,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                   lastFetchedUrl.current = '';
                   setLocalError(null);
                 }}
-                className="absolute right-3 p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors"
+                className="absolute right-3 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 title="Clear input"
               >
                 <X className="w-4 h-4" />
@@ -118,10 +118,10 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                 type="button"
                 onClick={handlePaste}
                 title="Paste link from clipboard"
-                className="absolute right-2 text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-200/70 hover:bg-slate-300/80 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 transition-colors font-semibold shadow-xs"
+                className="absolute right-2 text-xs flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 transition-colors font-semibold shadow-xs cursor-pointer active:scale-95"
               >
                 <Clipboard className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Paste</span>
+                <span>Paste</span>
               </button>
             )}
           </div>
@@ -129,7 +129,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           <button
             type="submit"
             disabled={!url.trim() || isLoading}
-            className="w-full sm:w-auto px-7 py-3 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-slate-200 dark:disabled:bg-zinc-800 text-white disabled:text-slate-400 dark:disabled:text-zinc-500 font-bold text-sm shadow-md shadow-[#2563EB]/20 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px] shrink-0 cursor-pointer"
+            className="w-full sm:w-auto px-7 py-3 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-slate-200 dark:disabled:bg-zinc-800 text-white disabled:text-slate-400 dark:disabled:text-zinc-500 font-bold text-sm shadow-md shadow-[#2563EB]/20 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[50px] shrink-0 cursor-pointer"
           >
             {isLoading ? (
               <>
