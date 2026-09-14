@@ -4,7 +4,7 @@ import { ShieldCheck, Zap, Layers, Sparkles, CheckCircle2, Globe, ArrowRight } f
 
 export const metadata = {
   title: 'Supported Video Downloader Platforms | VideoSave',
-  description: 'Download HD & 4K videos from TikTok without watermark, Instagram Reels, Facebook, X (Twitter), Vimeo, Dailymotion, Reddit, Pinterest, Twitch, and SoundCloud for free.',
+  description: 'Download HD & 4K videos from TikTok without watermark, Instagram Reels, Facebook, X (Twitter), Vimeo, Dailymotion, Pinterest, Twitch, and SoundCloud for free.',
   alternates: {
     canonical: 'https://videosave.site/platforms',
   },
@@ -58,13 +58,13 @@ export default function PlatformsPage() {
       example: 'https://vimeo.com/123456789',
     },
     {
-      id: 'reddit',
-      name: 'Reddit Video Downloader',
-      color: 'from-orange-500 to-red-600',
-      badge: 'With Audio',
-      description: 'Save Reddit clips and video posts with perfectly synchronized audio tracks in crisp MP4 format.',
-      features: ['HD resolution support', 'Audio track merging', 'Instant link conversion', 'No log-in required'],
-      example: 'https://www.reddit.com/r/videos/comments/example',
+      id: 'dailymotion',
+      name: 'Dailymotion Downloader',
+      color: 'from-blue-500 to-indigo-600',
+      badge: 'Full HD 1080p',
+      description: 'Download Dailymotion video streams, news clips, and trailers in high-definition MP4 format with audio.',
+      features: ['Full HD resolution support', 'Instant link processing', 'No app installation required', 'Fast download speeds'],
+      example: 'https://www.dailymotion.com/video/x8example',
     },
   ];
 

@@ -14,7 +14,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'VideoSave - Free Online Video Downloader (4K, 1080p, MP4, MP3)',
-  description: 'Download TikTok videos without watermark, Instagram Reels, Facebook videos, X (Twitter), Vimeo, and Reddit videos in HD & 4K for free. Fast, unlimited, online video saver.',
+  description: 'Download TikTok videos without watermark, Instagram Reels, Facebook videos, X (Twitter), Vimeo, and Pinterest videos in HD & 4K for free. Fast, unlimited, online video saver.',
   keywords: [
     'videosave',
     'video downloader',
@@ -82,7 +82,7 @@ export default function RootLayout({
       price: '0',
       priceCurrency: 'USD',
     },
-    description: 'Free online video downloader for TikTok no watermark, Instagram Reels, Facebook, X (Twitter), Vimeo, and Reddit videos.',
+    description: 'Free online video downloader for TikTok no watermark, Instagram Reels, Facebook, X (Twitter), Vimeo, and Pinterest videos.',
   };
 
   return (

@@ -6,7 +6,7 @@ import { HelpCircle, Search, MessageSquare, ShieldCheck, Zap } from 'lucide-reac
 
 export const metadata = {
   title: 'Frequently Asked Questions (FAQ) | VideoSave Downloader',
-  description: 'Find answers to common questions about downloading TikTok, Instagram, Facebook, X (Twitter), Vimeo, and Reddit videos in 4K, 1080p, and MP3 format for free.',
+  description: 'Find answers to common questions about downloading TikTok, Instagram, Facebook, X (Twitter), Vimeo, and Pinterest videos in 4K, 1080p, and MP3 format for free.',
   alternates: {
     canonical: 'https://videosave.site/faq',
   },
@@ -19,7 +19,7 @@ export default function FaqPage() {
       items: [
         {
           question: 'What is VideoSave?',
-          answer: 'VideoSave is a free, web-based online video and audio downloader tool that allows you to download videos, Reels, and audio tracks from TikTok, Instagram, Facebook, X (Twitter), Vimeo, Reddit, and more without registering or installing software.',
+          answer: 'VideoSave is a free, web-based online video and audio downloader tool that allows you to download videos, Reels, and audio tracks from TikTok, Instagram, Facebook, X (Twitter), Vimeo, Pinterest, and more without registering or installing software.',
         },
         {
           question: 'Is VideoSave 100% free to use?',

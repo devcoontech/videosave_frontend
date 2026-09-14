@@ -37,7 +37,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     if (v.includes('twitter.com') || v.includes('x.com') || v.includes('t.co')) return 'X (Twitter)';
     if (v.includes('vimeo.com')) return 'Vimeo Video';
     if (v.includes('dailymotion.com') || v.includes('dai.ly')) return 'Dailymotion Video';
-    if (v.includes('reddit.com') || v.includes('redd.it')) return 'Reddit Video';
     if (v.includes('pinterest.com') || v.includes('pin.it')) return 'Pinterest Video';
     if (v.includes('twitch.tv')) return 'Twitch Clip';
     if (v.includes('soundcloud.com')) return 'SoundCloud Track';
@@ -91,9 +90,9 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   return (
     <div className="w-full space-y-3">
       <form onSubmit={handleSubmit} noValidate className="w-full">
-        <div className="flex flex-col sm:flex-row items-stretch gap-2 p-1.5 sm:p-2 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#11131F]/95 border border-slate-200 dark:border-[#1E2438] backdrop-blur-md focus-within:border-[#2563EB] dark:focus-within:border-[#3B82F6] focus-within:ring-2 focus-within:ring-[#2563EB]/20 transition-all duration-200 shadow-lg">
-          <div className="relative flex-1 flex items-center h-11 sm:h-12">
-            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 dark:text-zinc-400 absolute left-3.5 sm:left-4 pointer-events-none shrink-0" />
+        <div className="flex flex-row items-center p-1.5 rounded-full bg-white/95 dark:bg-[#11131F]/95 border border-slate-200 dark:border-[#1E2438] backdrop-blur-md focus-within:border-[#2563EB] dark:focus-within:border-[#3B82F6] focus-within:ring-2 focus-within:ring-[#2563EB]/20 transition-all duration-200 shadow-xl w-full">
+          <div className="relative flex-1 flex items-center min-w-0 h-10 sm:h-12">
+            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 dark:text-zinc-400 absolute left-3 sm:left-4 pointer-events-none shrink-0" />
             <input
               type="text"
               inputMode="url"
@@ -105,7 +104,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               }}
               placeholder={placeholder}
               disabled={isLoading}
-              className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 text-xs sm:text-sm font-medium bg-transparent text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-400 focus:outline-none disabled:opacity-50"
+              className="w-full pl-9 sm:pl-11 pr-8 sm:pr-10 text-xs sm:text-sm font-medium bg-transparent text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-400 focus:outline-none disabled:opacity-50 truncate"
             />
             {url ? (
               <button
@@ -115,19 +114,19 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                   lastFetchedUrl.current = '';
                   setLocalError(null);
                 }}
-                className="absolute right-2.5 sm:right-3 p-1.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                className="absolute right-2 p-1.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 title="Clear input"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             ) : (
               <button
                 type="button"
                 onClick={handlePaste}
                 title="Paste link from clipboard"
-                className="absolute right-2.5 sm:right-3 p-1.5 rounded-lg text-slate-400 hover:text-[#2563EB] dark:text-zinc-400 dark:hover:text-[#3B82F6] hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                className="absolute right-2 p-1.5 rounded-lg text-slate-400 hover:text-[#2563EB] dark:text-zinc-400 dark:hover:text-[#3B82F6] hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               >
-                <Clipboard className="w-4 h-4" />
+                <Clipboard className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             )}
           </div>
@@ -135,15 +134,18 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           <button
             type="submit"
             disabled={!url.trim() || isLoading}
-            className="w-full sm:w-auto px-6 sm:px-8 h-11 sm:h-12 rounded-xl sm:rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-slate-300 dark:disabled:bg-zinc-800 text-white disabled:text-slate-500 dark:disabled:text-zinc-500 font-extrabold text-xs sm:text-sm shadow-md shadow-[#2563EB]/25 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] shrink-0 cursor-pointer"
+            className="px-4 sm:px-7 h-9 sm:h-10 my-auto rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-slate-300 dark:disabled:bg-zinc-800 text-white disabled:text-slate-500 dark:disabled:text-zinc-500 font-extrabold text-xs sm:text-sm shadow-md shadow-[#2563EB]/25 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer active:scale-95 ml-1"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-white" />
+                <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin text-white" />
                 <span>Analyzing...</span>
               </>
             ) : (
-              <span>{buttonLabel}</span>
+              <>
+                <span>{buttonLabel}</span>
+                <ArrowRight className="w-3.5 h-3.5 hidden sm:inline" />
+              </>
             )}
           </button>
         </div>
