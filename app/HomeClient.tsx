@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { PlatformSelector } from '../src/components/PlatformSelector';
 import { UrlInput } from '../src/components/UrlInput';
 import { MediaPreview } from '../src/components/MediaPreview';
 import { QualitySelector } from '../src/components/QualitySelector';
@@ -13,12 +11,10 @@ import { useMediaInfo } from '../src/hooks/useMediaInfo';
 import { useDownloadProgress } from '../src/hooks/useDownloadProgress';
 import { useAutoFileDownload } from '../src/hooks/useAutoFileDownload';
 import { createDownload } from '../services/api';
-import { isYoutubePlaylistUrl } from '../src/utils/helpers';
 import { downloadProgressLabel } from '../src/utils/downloadLabels';
+import { Zap, ShieldCheck, Globe, Sparkles } from 'lucide-react';
 
 export const HomeClient: React.FC = () => {
-  const router = useRouter();
-  const [platform, setPlatform] = useState<string>('instagram');
   const { loading, mediaInfo, sourceUrl, error, fetchInfo, reset: resetInfo } = useMediaInfo();
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
@@ -28,22 +24,9 @@ export const HomeClient: React.FC = () => {
   useAutoFileDownload(activeJobId, progressData);
 
   const handleFetch = (url: string) => {
-    // If playlist link detected, navigate to youtube-playlist route
-    // if (isYoutubePlaylistUrl(url)) {
-    //   router.push(`/youtube-playlist?url=${encodeURIComponent(url)}`);
-    //   return;
-    // }
-
     setActiveJobId(null);
     setDownloadError(null);
     fetchInfo(url);
-  };
-
-  const handlePlatformChange = (newPlatform: string) => {
-    setPlatform(newPlatform);
-    if (newPlatform === 'youtube_playlist') {
-      router.push('/youtube-playlist');
-    }
   };
 
   const handleStartDownloadForFormat = async (formatId: string) => {
@@ -72,61 +55,111 @@ export const HomeClient: React.FC = () => {
 
   const isDownloading = progressData?.status === 'extracting' || progressData?.status === 'downloading' || progressData?.status === 'processing';
 
+  const platformsList = [
+    { name: 'YouTube', color: 'bg-red-500' },
+    { name: 'TikTok', color: 'bg-zinc-900' },
+    { name: 'Instagram', color: 'bg-fuchsia-600' },
+    { name: 'Facebook', color: 'bg-blue-600' },
+    { name: 'X (Twitter)', color: 'bg-sky-500' },
+    { name: 'Vimeo', color: 'bg-cyan-500' },
+    { name: 'Dailymotion', color: 'bg-blue-500' },
+    { name: 'Reddit', color: 'bg-orange-600' },
+    { name: '+6 more', color: 'bg-zinc-700' },
+  ];
+
   return (
-    <div className="space-y-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
-      {/* Hero Header */}
-      <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 dark:text-zinc-100 tracking-tight leading-tight">
-          Download High-Quality Videos <br className="hidden sm:inline" />
-          <span className="text-[#2563EB] dark:text-[#3B82F6]">
-            In One Click
-          </span>
-        </h1>
-        <p className="text-base sm:text-lg text-slate-600 dark:text-zinc-400 font-medium max-w-xl mx-auto">
-          Fast, free online downloader for Instagram, Facebook, and TikTok.
-        </p>
-      </div>
+    <div id="downloader-hero" className="relative w-full bg-gradient-to-b from-[#1C0907] via-[#140605] to-[#0D0403] text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-[#2A1411] overflow-hidden">
+      {/* Background Ambient Warm Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#FF4D26]/15 blur-[120px] pointer-events-none rounded-full" />
 
-      {/* Main Glass Downloader Card */}
-      <div className="bg-white dark:bg-[#11131F] border border-slate-200/90 dark:border-zinc-800/90 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/50 dark:shadow-2xl dark:shadow-black/50 space-y-6">
-        <PlatformSelector activePlatform={platform as any} onSelectPlatform={handlePlatformChange} />
+      <div className="relative max-w-4xl mx-auto space-y-8 text-center animate-fade-in">
+        
+        {/* Top Tag Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#FF4D26]/30 text-zinc-300 font-semibold text-xs sm:text-sm shadow-md backdrop-blur-md">
+          <Zap className="w-4 h-4 text-[#FF4D26]" />
+          <span>Free · Fast · Unlimited</span>
+        </div>
 
-        <UrlInput
-          placeholder={`Paste ${platform.replace('_', ' ')} link...`}
-          exampleUrl={
-            platform === 'instagram'
-              ? 'https://www.instagram.com/reel/C123456789/'
-              : platform === 'tiktok'
-              ? 'https://www.tiktok.com/@user/video/123456789'
-              : 'https://www.facebook.com/reel/123456789/'
-          }
-          buttonLabel="Fetch Media"
-          isLoading={loading}
-          onSubmit={handleFetch}
-        />
+        {/* Hero Headline */}
+        <div className="space-y-4">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight sm:leading-none">
+            Download Videos from <br className="hidden sm:inline" />
+            <span className="text-[#FF4D26]">Any Platform</span>
+          </h1>
+          <p className="text-sm sm:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            Free, fast, and unlimited. Support for 14+ platforms and all formats. No sign-up required.
+          </p>
+        </div>
 
-        {loading && <SkeletonLoader />}
-        <ErrorMessage error={error || downloadError} onRetry={handleResetAll} />
+        {/* Central URL Downloader Input Box */}
+        <div className="max-w-2xl mx-auto space-y-6">
+          <UrlInput
+            placeholder="Paste video URL here..."
+            buttonLabel="Analyze"
+            isLoading={loading}
+            onSubmit={handleFetch}
+          />
 
-        {mediaInfo && !loading && (
-          <div className="space-y-6 animate-slide-up">
-            <MediaPreview info={mediaInfo} />
-            <QualitySelector
-              formats={mediaInfo.formats}
-              selectedFormatId={selectedFormatId}
-              onSelectFormat={setSelectedFormatId}
-              onSelectAndDownload={handleStartDownloadForFormat}
-              isDownloading={isDownloading}
-            />
+          {/* Micro Trust Badges Row */}
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-zinc-300 pt-2 font-medium">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>100% Safe</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <Zap className="w-4 h-4 text-amber-400" />
+              <span>Lightning Fast</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <Globe className="w-4 h-4 text-[#FF4D26]" />
+              <span>14+ Platforms</span>
+            </div>
+          </div>
 
-            {activeJobId && (
-              <ProgressBar
-                progress={progressData}
-                label={downloadProgressLabel(progressData?.status, selectedFormatId, progressData?.error)}
-              />
-            )}
+          {/* Supported Platforms Pills Row */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            {platformsList.map((item, idx) => (
+              <span
+                key={idx}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-zinc-300 transition-colors cursor-default"
+              >
+                <span className={`w-2 h-2 rounded-full ${item.color}`} />
+                {item.name}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Media Results / Loader / Error Display Container */}
+        {(loading || mediaInfo || error || downloadError) && (
+          <div className="max-w-3xl mx-auto pt-6 text-left">
+            <div className="bg-[#180907]/90 border border-[#331510] rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
+              {loading && <SkeletonLoader />}
+              <ErrorMessage error={error || downloadError} onRetry={handleResetAll} />
+
+              {mediaInfo && !loading && (
+                <div className="space-y-6 animate-slide-up">
+                  <MediaPreview info={mediaInfo} />
+                  <QualitySelector
+                    formats={mediaInfo.formats}
+                    selectedFormatId={selectedFormatId}
+                    onSelectFormat={setSelectedFormatId}
+                    onSelectAndDownload={handleStartDownloadForFormat}
+                    isDownloading={isDownloading}
+                  />
+
+                  {activeJobId && (
+                    <ProgressBar
+                      progress={progressData}
+                      label={downloadProgressLabel(progressData?.status, selectedFormatId, progressData?.error)}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
+
       </div>
     </div>
   );

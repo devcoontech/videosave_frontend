@@ -14,76 +14,84 @@ export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   const navItems = [
-    // { label: 'YouTube', path: '/youtube', platform: 'youtube' },
-    // { label: 'Playlist', path: '/youtube-playlist', platform: 'youtube_playlist' },
-    { label: 'Instagram', path: '/instagram', platform: 'instagram' },
-    { label: 'Facebook', path: '/facebook', platform: 'facebook' },
-    { label: 'TikTok', path: '/tiktok', platform: 'tiktok' },
+    { label: 'Home', path: '/' },
+    { label: 'Platforms', path: '/platforms' },
+    { label: 'Formats', path: '/formats' },
+    { label: 'FAQ', path: '/faq' },
   ];
 
   const isActive = (path: string) => pathname === path;
 
+  const scrollToDownloader = () => {
+    setMobileMenuOpen(false);
+    if (pathname !== '/') {
+      window.location.href = '/#downloader-hero';
+      return;
+    }
+    const heroEl = document.getElementById('downloader-hero');
+    if (heroEl) {
+      heroEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-50/80 dark:bg-[#090A0F]/80 border-b border-slate-200/80 dark:border-[#1E2436]/80 transition-colors">
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#0D0504]/90 border-b border-slate-200/80 dark:border-[#2A1411]/80 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
             <VideoSaveLogo size="md" />
           </Link>
 
-
           {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center gap-1 bg-slate-200/50 dark:bg-[#121520]/70 p-1.5 rounded-2xl border border-slate-200/60 dark:border-[#1E2436]">
-            <Link
-              href="/"
-              className={`px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all ${isActive('/')
-                  ? 'bg-white dark:bg-[#1A1E2E] text-[#2563EB] dark:text-[#3B82F6] shadow-sm'
-                  : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100 hover:bg-white/50 dark:hover:bg-zinc-800/50'
-                }`}
-            >
-              Home
-            </Link>
+          <nav className="hidden md:flex items-center gap-6 font-medium text-sm">
             {navItems.map((item) => {
               const active = isActive(item.path);
               return (
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all ${active
-                      ? 'bg-white dark:bg-[#1A1E2E] text-[#2563EB] dark:text-[#3B82F6] shadow-sm'
-                      : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100 hover:bg-white/50 dark:hover:bg-zinc-800/50'
-                    }`}
+                  className={`transition-colors py-1.5 px-2 rounded-lg font-semibold ${
+                    active
+                      ? 'text-[#FF4D26] dark:text-[#FF4D26]'
+                      : 'text-slate-600 dark:text-zinc-300 hover:text-[#FF4D26] dark:hover:text-[#FF4D26]'
+                  }`}
                 >
-                  <PlatformIcon platform={item.platform} className="w-4 h-4" />
                   {item.label}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Controls */}
+          {/* Right Action Button & Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl bg-slate-200/60 dark:bg-[#121520] border border-slate-200 dark:border-[#1E2436] text-slate-700 dark:text-zinc-300 hover:bg-slate-300/60 dark:hover:bg-[#1A1E2E] transition-colors cursor-pointer"
+              className="p-2.5 rounded-full bg-slate-100 dark:bg-[#1E0C0A] border border-slate-200 dark:border-[#381611] text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-[#2A1411] transition-colors cursor-pointer"
               title="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#2563EB]" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#FF4D26]" />}
+            </button>
+
+            <button
+              onClick={scrollToDownloader}
+              className="px-5 py-2.5 rounded-full bg-[#FF4D26] hover:bg-[#E63E15] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#FF4D26]/20 hover:shadow-lg hover:shadow-[#FF4D26]/30 transition-all duration-200 active:scale-95 cursor-pointer"
+            >
+              Start Downloading
             </button>
           </div>
 
-          {/* Mobile Button */}
+          {/* Mobile Header Controls */}
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-200/60 dark:bg-[#121520] text-slate-700 dark:text-zinc-300 cursor-pointer"
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#1E0C0A] text-slate-700 dark:text-zinc-300 cursor-pointer"
             >
-              {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-[#2563EB]" />}
+              {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-[#FF4D26]" />}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-slate-200/60 dark:hover:bg-[#121520] transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-[#1E0C0A] transition-colors cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -93,17 +101,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 dark:border-[#1E2436] bg-white dark:bg-[#090A0F] px-4 pt-3 pb-5 space-y-2 animate-fade-in">
-          <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-colors ${isActive('/')
-                ? 'bg-blue-50 dark:bg-blue-500/10 text-[#2563EB] dark:text-[#3B82F6]'
-                : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-[#121520]'
-              }`}
-          >
-            Home
-          </Link>
+        <div className="md:hidden border-b border-slate-200 dark:border-[#2A1411] bg-white dark:bg-[#0D0504] px-4 pt-3 pb-5 space-y-2 animate-fade-in">
           {navItems.map((item) => {
             const active = isActive(item.path);
             return (
@@ -111,23 +109,26 @@ export const Navbar: React.FC = () => {
                 key={item.path}
                 href={item.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-colors ${active
-                    ? 'bg-blue-50 dark:bg-blue-500/10 text-[#2563EB] dark:text-[#3B82F6]'
-                    : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-[#121520]'
-                  }`}
+                className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
+                  active
+                    ? 'bg-orange-50 dark:bg-[#2A1411] text-[#FF4D26]'
+                    : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-[#180907]'
+                }`}
               >
-                <PlatformIcon platform={item.platform} className="w-5 h-5" />
                 {item.label}
               </Link>
             );
           })}
+          <div className="pt-2">
+            <button
+              onClick={scrollToDownloader}
+              className="w-full py-3 rounded-xl bg-[#FF4D26] text-white font-bold text-center text-sm shadow-md"
+            >
+              Start Downloading
+            </button>
+          </div>
         </div>
       )}
-
-
-
-
-
     </header>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Clipboard, ArrowRight, Loader2, Link2, X, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Clipboard, ArrowRight, Loader2, Link2, X, Globe, CheckCircle2, AlertCircle, Search } from 'lucide-react';
 import { normalizeMediaUrl } from '../utils/helpers';
 
 
@@ -84,9 +84,9 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   return (
     <div className="w-full space-y-3">
       <form onSubmit={handleSubmit} noValidate className="w-full">
-        <div className="flex flex-col sm:flex-row items-stretch gap-2.5 p-2 rounded-2xl bg-slate-50/80 dark:bg-[#0B0D14] border border-slate-200 dark:border-zinc-800 focus-within:border-[#2563EB] dark:focus-within:border-[#3B82F6] focus-within:ring-4 focus-within:ring-[#2563EB]/15 transition-all duration-200 shadow-inner">
-          <div className="relative flex-1 flex items-center min-h-[50px]">
-            <Link2 className="w-5 h-5 text-slate-400 dark:text-zinc-500 absolute left-3.5 pointer-events-none shrink-0" />
+        <div className="flex flex-col sm:flex-row items-stretch gap-2.5 p-2 rounded-full bg-white/10 dark:bg-[#2A1411]/70 border border-white/20 dark:border-[#4D2019] backdrop-blur-md focus-within:border-[#FF4D26] dark:focus-within:border-[#FF4D26] focus-within:ring-4 focus-within:ring-[#FF4D26]/20 transition-all duration-200 shadow-xl">
+          <div className="relative flex-1 flex items-center min-h-[52px]">
+            <Search className="w-5 h-5 text-slate-400 dark:text-zinc-400 absolute left-4 pointer-events-none shrink-0" />
             <input
               type="text"
               inputMode="url"
@@ -98,7 +98,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               }}
               placeholder={placeholder}
               disabled={isLoading}
-              className="w-full pl-11 pr-24 py-3 text-base sm:text-sm font-medium bg-transparent text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none disabled:opacity-50"
+              className="w-full pl-12 pr-12 py-3 text-base sm:text-sm font-medium bg-transparent text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-400 focus:outline-none disabled:opacity-50"
             />
             {url ? (
               <button
@@ -108,7 +108,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                   lastFetchedUrl.current = '';
                   setLocalError(null);
                 }}
-                className="absolute right-3 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                className="absolute right-3 p-1.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 title="Clear input"
               >
                 <X className="w-4 h-4" />
@@ -118,10 +118,9 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                 type="button"
                 onClick={handlePaste}
                 title="Paste link from clipboard"
-                className="absolute right-2 text-xs flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 transition-colors font-semibold shadow-xs cursor-pointer active:scale-95"
+                className="absolute right-3 p-2 rounded-lg text-slate-400 hover:text-[#FF4D26] dark:text-zinc-400 dark:hover:text-[#FF4D26] hover:bg-white/10 transition-colors cursor-pointer"
               >
-                <Clipboard className="w-3.5 h-3.5" />
-                <span>Paste</span>
+                <Clipboard className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -129,53 +128,35 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           <button
             type="submit"
             disabled={!url.trim() || isLoading}
-            className="w-full sm:w-auto px-7 py-3 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-slate-200 dark:disabled:bg-zinc-800 text-white disabled:text-slate-400 dark:disabled:text-zinc-500 font-bold text-sm shadow-md shadow-[#2563EB]/20 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[50px] shrink-0 cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#FF4D26] hover:bg-[#E63E15] disabled:bg-slate-300 dark:disabled:bg-zinc-800 text-white disabled:text-slate-500 dark:disabled:text-zinc-500 font-extrabold text-sm sm:text-base shadow-lg shadow-[#FF4D26]/30 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[52px] shrink-0 cursor-pointer"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin text-white" />
-                <span>Fetching...</span>
+                <Loader2 className="w-5 h-5 animate-spin text-white" />
+                <span>Analyzing...</span>
               </>
             ) : (
-              <>
-                <span>{buttonLabel}</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
+              <span>{buttonLabel}</span>
             )}
           </button>
         </div>
       </form>
 
       {localError && (
-        <p className="flex items-center gap-1.5 px-1 text-xs font-semibold text-red-600 dark:text-red-400">
-          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+        <p className="flex items-center justify-center gap-1.5 px-1 text-xs sm:text-sm font-semibold text-rose-500 dark:text-rose-400 animate-fade-in">
+          <AlertCircle className="w-4 h-4 shrink-0" />
           {localError}
         </p>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs">
-        {detectedPlatform ? (
-          <span className="inline-flex items-center gap-1.5 font-semibold text-[#2563EB] dark:text-[#3B82F6] bg-blue-50 dark:bg-blue-950/40 px-3 py-1 rounded-full border border-blue-200/80 dark:border-blue-900/60 animate-fade-in shadow-xs">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+      {detectedPlatform && (
+        <div className="flex items-center justify-center pt-1 animate-fade-in">
+          <span className="inline-flex items-center gap-1.5 font-semibold text-[#FF4D26] dark:text-[#FF6642] bg-orange-500/10 px-3.5 py-1 rounded-full border border-[#FF4D26]/30 text-xs">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#FF4D26]" />
             {detectedPlatform} link detected
           </span>
-        ) : (
-          <span className="text-slate-400 dark:text-zinc-500 font-medium flex items-center gap-1">
-            <Globe className="w-3.5 h-3.5 text-[#2563EB]" />
-            Supports YouTube videos, playlists, Instagram & Facebook reels
-          </span>
-        )}
-
-        {exampleUrl && (
-          <button
-            type="button"
-            onClick={() => submitUrl(exampleUrl)}
-            className="text-slate-500 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] font-medium underline underline-offset-2 transition-colors ml-auto cursor-pointer"
-          >
-            Try example link
-          </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

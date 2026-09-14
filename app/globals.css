@@ -9,23 +9,23 @@
   --text-primary: #0F172A;
   --text-secondary: #475569;
   --border: #E2E8F0;
-  --brand: #2563EB;
-  --brand-hover: #1D4ED8;
-  --brand-text-light: #2563EB;
+  --brand: #FF4D26;
+  --brand-hover: #E63E15;
+  --brand-text-light: #FF4D26;
   --success: #10B981;
   --error: #EF4444;
 }
 
 .dark {
-  --background: #090A0F;
-  --surface: #11131F;
-  --surface-secondary: #181B2C;
+  --background: #0D0504;
+  --surface: #180907;
+  --surface-secondary: #220D0A;
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
-  --border: #1E2438;
-  --brand: #2563EB;
-  --brand-hover: #1D4ED8;
-  --brand-text-light: #3B82F6;
+  --border: #331510;
+  --brand: #FF4D26;
+  --brand-hover: #E63E15;
+  --brand-text-light: #FF6642;
   --success: #10B981;
   --error: #F87171;
 }
@@ -35,7 +35,7 @@
     font-family: 'Inter', var(--font-inter), system-ui, -apple-system, sans-serif !important;
   }
   body {
-    @apply antialiased font-sans bg-slate-50 dark:bg-[#090A0F] text-slate-900 dark:text-zinc-100 transition-colors duration-200 min-h-screen flex flex-col;
+    @apply antialiased font-sans bg-slate-50 dark:bg-[#0D0504] text-slate-900 dark:text-zinc-100 transition-colors duration-200 min-h-screen flex flex-col;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
