@@ -34,7 +34,14 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     if (v.includes('instagram.com')) return 'Instagram Reel';
     if (v.includes('facebook.com') || v.includes('fb.watch')) return 'Facebook Reel';
     if (v.includes('tiktok.com')) return 'TikTok Video';
-    return null;
+    if (v.includes('twitter.com') || v.includes('x.com') || v.includes('t.co')) return 'X (Twitter)';
+    if (v.includes('vimeo.com')) return 'Vimeo Video';
+    if (v.includes('dailymotion.com') || v.includes('dai.ly')) return 'Dailymotion Video';
+    if (v.includes('reddit.com') || v.includes('redd.it')) return 'Reddit Video';
+    if (v.includes('pinterest.com') || v.includes('pin.it')) return 'Pinterest Video';
+    if (v.includes('twitch.tv')) return 'Twitch Clip';
+    if (v.includes('soundcloud.com')) return 'SoundCloud Track';
+    return 'Media';
   };
 
   const submitUrl = (raw: string) => {
@@ -84,7 +91,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   return (
     <div className="w-full space-y-3">
       <form onSubmit={handleSubmit} noValidate className="w-full">
-        <div className="flex flex-col sm:flex-row items-stretch gap-2.5 p-2 rounded-full bg-white/10 dark:bg-[#2A1411]/70 border border-white/20 dark:border-[#4D2019] backdrop-blur-md focus-within:border-[#FF4D26] dark:focus-within:border-[#FF4D26] focus-within:ring-4 focus-within:ring-[#FF4D26]/20 transition-all duration-200 shadow-xl">
+        <div className="flex flex-col sm:flex-row items-stretch gap-2.5 p-2 rounded-full bg-white/80 dark:bg-[#11131F]/90 border border-slate-200 dark:border-[#1E2438] backdrop-blur-md focus-within:border-[#2563EB] dark:focus-within:border-[#3B82F6] focus-within:ring-4 focus-within:ring-[#2563EB]/20 transition-all duration-200 shadow-xl">
           <div className="relative flex-1 flex items-center min-h-[52px]">
             <Search className="w-5 h-5 text-slate-400 dark:text-zinc-400 absolute left-4 pointer-events-none shrink-0" />
             <input
@@ -118,7 +125,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                 type="button"
                 onClick={handlePaste}
                 title="Paste link from clipboard"
-                className="absolute right-3 p-2 rounded-lg text-slate-400 hover:text-[#FF4D26] dark:text-zinc-400 dark:hover:text-[#FF4D26] hover:bg-white/10 transition-colors cursor-pointer"
+                className="absolute right-3 p-2 rounded-lg text-slate-400 hover:text-[#2563EB] dark:text-zinc-400 dark:hover:text-[#3B82F6] hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               >
                 <Clipboard className="w-4 h-4" />
               </button>
@@ -128,7 +135,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           <button
             type="submit"
             disabled={!url.trim() || isLoading}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#FF4D26] hover:bg-[#E63E15] disabled:bg-slate-300 dark:disabled:bg-zinc-800 text-white disabled:text-slate-500 dark:disabled:text-zinc-500 font-extrabold text-sm sm:text-base shadow-lg shadow-[#FF4D26]/30 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[52px] shrink-0 cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-slate-300 dark:disabled:bg-zinc-800 text-white disabled:text-slate-500 dark:disabled:text-zinc-500 font-extrabold text-sm sm:text-base shadow-lg shadow-[#2563EB]/30 disabled:shadow-none transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[52px] shrink-0 cursor-pointer"
           >
             {isLoading ? (
               <>
@@ -151,8 +158,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({
 
       {detectedPlatform && (
         <div className="flex items-center justify-center pt-1 animate-fade-in">
-          <span className="inline-flex items-center gap-1.5 font-semibold text-[#FF4D26] dark:text-[#FF6642] bg-orange-500/10 px-3.5 py-1 rounded-full border border-[#FF4D26]/30 text-xs">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#FF4D26]" />
+          <span className="inline-flex items-center gap-1.5 font-semibold text-[#2563EB] dark:text-[#3B82F6] bg-blue-500/10 px-3.5 py-1 rounded-full border border-[#2563EB]/30 text-xs">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB] dark:text-[#3B82F6]" />
             {detectedPlatform} link detected
           </span>
         </div>

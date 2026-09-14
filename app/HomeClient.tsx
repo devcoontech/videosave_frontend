@@ -56,7 +56,6 @@ export const HomeClient: React.FC = () => {
   const isDownloading = progressData?.status === 'extracting' || progressData?.status === 'downloading' || progressData?.status === 'processing';
 
   const platformsList = [
-    { name: 'YouTube', color: 'bg-red-500' },
     { name: 'TikTok', color: 'bg-zinc-900' },
     { name: 'Instagram', color: 'bg-fuchsia-600' },
     { name: 'Facebook', color: 'bg-blue-600' },
@@ -64,19 +63,20 @@ export const HomeClient: React.FC = () => {
     { name: 'Vimeo', color: 'bg-cyan-500' },
     { name: 'Dailymotion', color: 'bg-blue-500' },
     { name: 'Reddit', color: 'bg-orange-600' },
+    { name: 'Pinterest', color: 'bg-red-500' },
     { name: '+6 more', color: 'bg-zinc-700' },
   ];
 
   return (
-    <div id="downloader-hero" className="relative w-full bg-gradient-to-b from-[#1C0907] via-[#140605] to-[#0D0403] text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-[#2A1411] overflow-hidden">
-      {/* Background Ambient Warm Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#FF4D26]/15 blur-[120px] pointer-events-none rounded-full" />
+    <div id="downloader-hero" className="relative w-full bg-gradient-to-b from-[#0B0D14] via-[#11131F] to-[#090A0F] text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-[#1E2438] overflow-hidden">
+      {/* Background Ambient Royal Blue Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#2563EB]/15 blur-[120px] pointer-events-none rounded-full" />
 
       <div className="relative max-w-4xl mx-auto space-y-8 text-center animate-fade-in">
         
         {/* Top Tag Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#FF4D26]/30 text-zinc-300 font-semibold text-xs sm:text-sm shadow-md backdrop-blur-md">
-          <Zap className="w-4 h-4 text-[#FF4D26]" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#2563EB]/30 text-zinc-300 font-semibold text-xs sm:text-sm shadow-md backdrop-blur-md">
+          <Zap className="w-4 h-4 text-[#3B82F6]" />
           <span>Free · Fast · Unlimited</span>
         </div>
 
@@ -84,10 +84,10 @@ export const HomeClient: React.FC = () => {
         <div className="space-y-4">
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight sm:leading-none">
             Download Videos from <br className="hidden sm:inline" />
-            <span className="text-[#FF4D26]">Any Platform</span>
+            <span className="text-[#2563EB] dark:text-[#3B82F6]">Any Platform</span>
           </h1>
           <p className="text-sm sm:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
-            Free, fast, and unlimited. Support for 14+ platforms and all formats. No sign-up required.
+            Free, fast, and unlimited online downloader for TikTok, Instagram, Facebook, X, and more. No sign-up required.
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export const HomeClient: React.FC = () => {
               <span>Lightning Fast</span>
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-              <Globe className="w-4 h-4 text-[#FF4D26]" />
+              <Globe className="w-4 h-4 text-[#3B82F6]" />
               <span>14+ Platforms</span>
             </div>
           </div>
@@ -133,7 +133,7 @@ export const HomeClient: React.FC = () => {
         {/* Media Results / Loader / Error Display Container */}
         {(loading || mediaInfo || error || downloadError) && (
           <div className="max-w-3xl mx-auto pt-6 text-left">
-            <div className="bg-[#180907]/90 border border-[#331510] rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
+            <div className="bg-[#11131F]/90 border border-[#1E2438] rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
               {loading && <SkeletonLoader />}
               <ErrorMessage error={error || downloadError} onRetry={handleResetAll} />
 

@@ -9,18 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Vibrant Orange-Red Logo & Accent Palette (#FF4D26 / #FF4500)
-        brandOrange: {
-          50: '#FFF5F2',
-          100: '#FFE6E0',
-          200: '#FFC7B8',
-          500: '#FF4D26',
-          600: '#E63E15',
-          700: '#CC2E08',
-          800: '#A32103',
-          900: '#7A1600',
-        },
-        // Electric Royal Blue Accent (kept for secondary badges if needed)
+        // Official VideoSave Royal Blue Brand Palette (#2563EB / #1D4ED8)
         brand: {
           50: '#EFF6FF',
           100: '#DBEAFE',
@@ -32,10 +21,10 @@ module.exports = {
           900: '#172554',
         },
 
-        // Warm Chocolate / Reddish Dark Hero Backgrounds (matching reference)
-        heroDark: '#160806',
-        heroDarkCard: '#220D0A',
-        heroDarkBorder: '#381611',
+        // Obsidian / Deep Space Hero Backgrounds
+        heroDark: '#0B0D14',
+        heroDarkCard: '#11131F',
+        heroDarkBorder: '#1E2438',
 
         // Modern SaaS Light Mode
         lightBg: "#F8FAFC",
@@ -45,13 +34,13 @@ module.exports = {
         lightTextSec: "#475569",
         lightBorder: "#E2E8F0",
 
-        // Modern SaaS Dark Mode (Obsidian / Deep Warm)
-        darkBg: "#0B0605",
-        darkCard: "#140A09",
-        darkCardSec: "#1D0F0D",
+        // Modern SaaS Dark Mode (Obsidian / Deep Space)
+        darkBg: "#090A0F",
+        darkCard: "#11131F",
+        darkCardSec: "#191D2E",
         darkTextPrimary: "#F8FAFC",
         darkTextSec: "#94A3B8",
-        darkBorder: "#2A1411",
+        darkBorder: "#1E2438",
 
         ytRed: "#FF0033",
         fbBlue: "#1877F2",
@@ -61,9 +50,9 @@ module.exports = {
       },
       boxShadow: {
         videosave: "0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)",
-        "videosave-glow": "0 10px 25px -5px rgba(255, 77, 38, 0.25)",
-        "videosave-hover": "0 15px 30px -10px rgba(255, 77, 38, 0.35)",
-        "orange-glow": "0 0 35px rgba(255, 77, 38, 0.25)",
+        "videosave-glow": "0 10px 25px -5px rgba(37, 99, 235, 0.25)",
+        "videosave-hover": "0 15px 30px -10px rgba(37, 99, 235, 0.35)",
+        "blue-glow": "0 0 35px rgba(37, 99, 235, 0.25)",
       },
 
       borderRadius: {

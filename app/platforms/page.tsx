@@ -3,28 +3,19 @@ import { HomeClient } from '../HomeClient';
 import { ShieldCheck, Zap, Layers, Sparkles, CheckCircle2, Globe, ArrowRight } from 'lucide-react';
 
 export const metadata = {
-  title: 'Supported Video Downloader Platforms | VidGrab',
-  description: 'Download HD & 4K videos from YouTube, TikTok without watermark, Instagram Reels, Facebook, X (Twitter), Vimeo, and Reddit for free.',
+  title: 'Supported Video Downloader Platforms | VideoSave',
+  description: 'Download HD & 4K videos from TikTok without watermark, Instagram Reels, Facebook, X (Twitter), Vimeo, Dailymotion, Reddit, Pinterest, Twitch, and SoundCloud for free.',
   alternates: {
-    canonical: 'https://vidgrab.media/platforms',
+    canonical: 'https://videosave.site/platforms',
   },
 };
 
 export default function PlatformsPage() {
   const platforms = [
     {
-      id: 'youtube',
-      name: 'YouTube & Playlists',
-      color: 'from-red-600 to-rose-700',
-      badge: '4K Ultra HD & Playlists',
-      description: 'Download YouTube videos in 4K, 1080p, 60fps, MP3 audio, and extract full channel playlists with batch selection.',
-      features: ['Up to 4K 2160p resolution', 'YouTube Shorts & Playlists', 'MP3 320kbps audio extraction', 'No registration needed'],
-      example: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
-    {
       id: 'tiktok',
       name: 'TikTok Video Downloader',
-      color: 'from-[#FF4D26] to-[#E63E15]',
+      color: 'from-blue-600 to-indigo-700',
       badge: 'No Watermark HD',
       description: 'Save TikTok videos without watermark in original HD resolution. Download viral clips, sounds, and trend videos instantly.',
       features: ['100% Watermark-free', 'HD MP4 download format', 'TikTok Audio MP3 saver', 'Fast instant processing'],
@@ -42,7 +33,7 @@ export default function PlatformsPage() {
     {
       id: 'facebook',
       name: 'Facebook Video & Reels',
-      color: 'from-blue-600 to-indigo-700',
+      color: 'from-blue-600 to-blue-800',
       badge: 'Public & HD Video',
       description: 'Save Facebook public videos, Watch clips, and Reels in Full HD 1080p or standard quality with zero quality loss.',
       features: ['HD & SD format choices', 'Facebook Reels downloader', 'No app installation', 'Private streaming proxy'],
@@ -60,11 +51,20 @@ export default function PlatformsPage() {
     {
       id: 'vimeo',
       name: 'Vimeo Video Downloader',
-      color: 'from-cyan-500 to-[#FF4D26]',
+      color: 'from-cyan-500 to-blue-600',
       badge: 'Pro HD Quality',
       description: 'Save Vimeo HD streams, filmmaking documentaries, and showcase videos in crisp 1080p and 2K resolution.',
       features: ['Uncompressed HD clarity', 'Stereo audio preservation', 'Fast bandwidth extraction', 'Unlimited usage'],
       example: 'https://vimeo.com/123456789',
+    },
+    {
+      id: 'reddit',
+      name: 'Reddit Video Downloader',
+      color: 'from-orange-500 to-red-600',
+      badge: 'With Audio',
+      description: 'Save Reddit clips and video posts with perfectly synchronized audio tracks in crisp MP4 format.',
+      features: ['HD resolution support', 'Audio track merging', 'Instant link conversion', 'No log-in required'],
+      example: 'https://www.reddit.com/r/videos/comments/example',
     },
   ];
 
@@ -77,14 +77,14 @@ export default function PlatformsPage() {
         
         {/* Page Section Title */}
         <div className="text-center space-y-4 max-w-3xl mx-auto pt-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 text-[#FF4D26] font-bold text-xs sm:text-sm border border-[#FF4D26]/30">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-500 dark:text-blue-400 font-bold text-xs sm:text-sm border border-blue-500/30">
             <Globe className="w-4 h-4" /> Universal Compatibility
           </div>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Supported Video <span className="text-[#FF4D26]">Platforms</span>
+            Supported Video <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">Platforms</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 font-medium">
-            VidGrab supports all major video streaming and social media networks. Simply paste any link into the universal box above.
+            VideoSave supports all major video streaming and social media networks. Simply paste any video link into the universal search box above.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function PlatformsPage() {
           {platforms.map((p) => (
             <div
               key={p.id}
-              className="bg-white dark:bg-[#180907] border border-slate-200 dark:border-[#331510] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm hover:shadow-xl hover:border-[#FF4D26]/50 transition-all flex flex-col justify-between"
+              className="bg-white dark:bg-[#11131F] border border-slate-200 dark:border-[#1E2338] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm hover:shadow-xl hover:border-blue-500/50 transition-all flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -109,10 +109,10 @@ export default function PlatformsPage() {
                   {p.description}
                 </p>
 
-                <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-[#2A1411]">
+                <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-[#1E2338]">
                   {p.features.map((feat, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-zinc-300">
-                      <CheckCircle2 className="w-4 h-4 text-[#FF4D26] shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0" />
                       <span>{feat}</span>
                     </div>
                   ))}
@@ -122,7 +122,7 @@ export default function PlatformsPage() {
               <div className="pt-4">
                 <a
                   href="#downloader-hero"
-                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-[#2A1411] hover:bg-[#FF4D26] hover:text-white text-slate-800 dark:text-zinc-200 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-[#1A1F36] hover:bg-blue-600 hover:text-white text-slate-800 dark:text-zinc-200 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
                 >
                   <span>Download {p.name.split(' ')[0]} Video</span>
                   <ArrowRight className="w-4 h-4" />
@@ -133,15 +133,15 @@ export default function PlatformsPage() {
         </div>
 
         {/* SEO Article */}
-        <article className="prose dark:prose-invert max-w-5xl mx-auto bg-slate-100/60 dark:bg-[#180907]/60 border border-slate-200 dark:border-[#331510] rounded-3xl p-8 sm:p-12 space-y-6 text-sm text-slate-700 dark:text-zinc-300">
+        <article className="prose dark:prose-invert max-w-5xl mx-auto bg-slate-100/60 dark:bg-[#11131F]/60 border border-slate-200 dark:border-[#1E2338] rounded-3xl p-8 sm:p-12 space-y-6 text-sm text-slate-700 dark:text-zinc-300">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
             Download Online Videos Across Any Device & Social Network
           </h2>
           <p className="leading-relaxed">
-            Whether you want to save educational lectures from <strong>YouTube</strong>, download trending viral clips from <strong>TikTok without watermarks</strong>, save inspirational <strong>Instagram Reels</strong>, or archive high-definition <strong>Facebook Videos</strong>, VidGrab provides an effortless multi-platform solution.
+            Whether you want to save viral trending clips from <strong>TikTok without watermarks</strong>, download inspirational <strong>Instagram Reels</strong>, archive high-definition <strong>Facebook Videos</strong>, or grab media from <strong>X (Twitter)</strong> and <strong>Vimeo</strong>, VideoSave provides an effortless multi-platform solution.
           </p>
           <p className="leading-relaxed">
-            Our cloud parsing engine automatically recognizes incoming links from over 14 platforms, fetching video streams, audio bitrates, and metadata instantly. Enjoy seamless browser downloading on iOS Safari, Android Chrome, macOS, Windows, and Linux devices.
+            Our high-speed parsing engine automatically recognizes incoming links from top platforms, fetching video streams, audio bitrates, and metadata instantly. Enjoy seamless browser downloading on iOS Safari, Android Chrome, macOS, Windows, and Linux devices.
           </p>
         </article>
 
@@ -149,3 +149,4 @@ export default function PlatformsPage() {
     </div>
   );
 }
+

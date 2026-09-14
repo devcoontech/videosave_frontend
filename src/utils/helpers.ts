@@ -25,7 +25,7 @@ export function formatDuration(seconds?: number): string {
 }
 
 export function getPlatformGradient(platform: string): string {
-  switch (platform) {
+  switch (platform.toLowerCase()) {
     case 'youtube':
     case 'youtube_playlist':
       return 'bg-red-600';
@@ -34,9 +34,24 @@ export function getPlatformGradient(platform: string): string {
     case 'facebook':
       return 'bg-blue-600';
     case 'tiktok':
-      return 'bg-slate-900';
+      return 'bg-zinc-900';
+    case 'twitter':
+    case 'x':
+      return 'bg-sky-500';
+    case 'vimeo':
+      return 'bg-cyan-500';
+    case 'dailymotion':
+      return 'bg-blue-500';
+    case 'reddit':
+      return 'bg-orange-600';
+    case 'pinterest':
+      return 'bg-red-500';
+    case 'twitch':
+      return 'bg-purple-600';
+    case 'soundcloud':
+      return 'bg-amber-600';
     default:
-      return 'bg-indigo-600';
+      return 'bg-[#FF4D26]';
   }
 }
 
