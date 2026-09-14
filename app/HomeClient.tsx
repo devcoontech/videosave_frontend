@@ -68,31 +68,31 @@ export const HomeClient: React.FC = () => {
   ];
 
   return (
-    <div id="downloader-hero" className="relative w-full bg-gradient-to-b from-[#0B0D14] via-[#11131F] to-[#090A0F] text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-[#1E2438] overflow-hidden">
+    <div id="downloader-hero" className="relative w-full bg-gradient-to-b from-[#0B0D14] via-[#11131F] to-[#090A0F] text-white py-12 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-[#1E2438] overflow-hidden">
       {/* Background Ambient Royal Blue Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#2563EB]/15 blur-[120px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[200px] sm:h-[350px] bg-[#2563EB]/15 blur-[80px] sm:blur-[120px] pointer-events-none rounded-full" />
 
-      <div className="relative max-w-4xl mx-auto space-y-8 text-center animate-fade-in">
+      <div className="relative max-w-4xl mx-auto space-y-6 sm:space-y-8 text-center animate-fade-in">
         
         {/* Top Tag Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#2563EB]/30 text-zinc-300 font-semibold text-xs sm:text-sm shadow-md backdrop-blur-md">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-[#2563EB]/30 text-zinc-300 font-semibold text-xs sm:text-sm shadow-md backdrop-blur-md">
           <Zap className="w-4 h-4 text-[#3B82F6]" />
           <span>Free · Fast · Unlimited</span>
         </div>
 
         {/* Hero Headline */}
-        <div className="space-y-4">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight sm:leading-none">
+        <div className="space-y-3 sm:space-y-4">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-tight sm:leading-tight">
             Download Videos from <br className="hidden sm:inline" />
             <span className="text-[#2563EB] dark:text-[#3B82F6]">Any Platform</span>
           </h1>
-          <p className="text-sm sm:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-xs sm:text-base md:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal px-2">
             Free, fast, and unlimited online downloader for TikTok, Instagram, Facebook, X, and more. No sign-up required.
           </p>
         </div>
 
         {/* Central URL Downloader Input Box */}
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="max-w-2xl mx-auto space-y-5 sm:space-y-6">
           <UrlInput
             placeholder="Paste video URL here..."
             buttonLabel="Analyze"
@@ -101,29 +101,29 @@ export const HomeClient: React.FC = () => {
           />
 
           {/* Micro Trust Badges Row */}
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-zinc-300 pt-2 font-medium">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-zinc-300 pt-1 font-medium">
+            <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-xs">
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
               <span>100% Safe</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-              <Zap className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-xs">
+              <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
               <span>Lightning Fast</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-              <Globe className="w-4 h-4 text-[#3B82F6]" />
+            <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-xs">
+              <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#3B82F6] shrink-0" />
               <span>14+ Platforms</span>
             </div>
           </div>
 
           {/* Supported Platforms Pills Row */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1">
             {platformsList.map((item, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-zinc-300 transition-colors cursor-default"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] sm:text-xs font-semibold text-zinc-300 transition-colors cursor-default"
               >
-                <span className={`w-2 h-2 rounded-full ${item.color}`} />
+                <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${item.color}`} />
                 {item.name}
               </span>
             ))}
