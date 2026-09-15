@@ -5,7 +5,7 @@ export async function GET() {
   const lastModDate = new Date().toISOString().split('T')[0];
 
   const pages = [
-    { url: `${baseUrl}`, priority: '1.0', changefreq: 'daily' },
+    { url: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
     { url: `${baseUrl}/tiktok`, priority: '0.9', changefreq: 'weekly' },
     { url: `${baseUrl}/instagram`, priority: '0.9', changefreq: 'weekly' },
     { url: `${baseUrl}/facebook`, priority: '0.8', changefreq: 'weekly' },
