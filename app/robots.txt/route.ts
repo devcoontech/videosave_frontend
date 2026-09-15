@@ -1,19 +1,22 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://videosave.site').replace(/\/$/, '');
+export async function GET(req: NextRequest) {
+  const host = req.headers.get('host') || 'videosave.site';
+  const protocol = req.headers.get('x-forwarded-proto') || 'https';
+  const currentBaseUrl = `${protocol}://${host}`.replace(/\/$/, '');
 
   const content = `User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: ${baseUrl}/sitemap.xml`;
+Sitemap: https://www.videosave.site/sitemap.xml
+Sitemap: https://videosave.site/sitemap.xml`;
 
   return new NextResponse(content, {
     status: 200,
     headers: {
       'Content-Type': 'text/plain; charset=UTF-8',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=0, must-revalidate',
     },
   });
 }
