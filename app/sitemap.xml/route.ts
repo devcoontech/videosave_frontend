@@ -39,7 +39,7 @@ ${pages
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=UTF-8',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=0, must-revalidate',
     },
   });
 }
