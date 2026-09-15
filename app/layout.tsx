@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'VideoSave - Free Online Video Downloader (4K, 1080p, MP4, MP3)',
   description: 'Download TikTok videos without watermark, Instagram Reels, Facebook videos, X (Twitter), Vimeo, and Pinterest videos in HD & 4K for free. Fast, unlimited, online video saver.',
   verification: {
-    google: 'googleea928f32fd8215bc'
+    google: 'Fwmfc4CpcN7fHZBnUDkKP7NhL1bJ8LpWe-vt8Ry0Vyc'
   },
   keywords: [
     'videosave',
