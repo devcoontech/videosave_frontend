@@ -26,9 +26,6 @@ export function formatDuration(seconds?: number): string {
 
 export function getPlatformGradient(platform: string): string {
   switch (platform.toLowerCase()) {
-    case 'youtube':
-    case 'youtube_playlist':
-      return 'bg-red-600';
     case 'instagram':
       return 'bg-pink-600';
     case 'facebook':
@@ -46,12 +43,8 @@ export function getPlatformGradient(platform: string): string {
       return 'bg-orange-600';
     case 'pinterest':
       return 'bg-red-500';
-    case 'twitch':
-      return 'bg-purple-600';
-    case 'soundcloud':
-      return 'bg-amber-600';
     default:
-      return 'bg-[#FF4D26]';
+      return 'bg-[#2563EB]';
   }
 }
 
@@ -72,197 +65,58 @@ export function normalizeMediaUrl(raw: string): string | null {
   }
 }
 
-export function isYoutubePlaylistUrl(url: string): boolean {
-  const normalized = normalizeMediaUrl(url);
-  if (!normalized) return false;
-  try {
-    const parsed = new URL(normalized);
-    const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
-    const isYt =
-      host === 'youtu.be' ||
-      host === 'youtube.com' ||
-      host === 'm.youtube.com' ||
-      host === 'music.youtube.com';
-    if (!isYt) return false;
-    if (parsed.pathname.toLowerCase().includes('/playlist')) return true;
-    const hasList = parsed.searchParams.has('list');
-    const hasVideoId =
-      parsed.searchParams.has('v') ||
-      host === 'youtu.be' ||
-      parsed.pathname.toLowerCase().startsWith('/shorts/') ||
-      parsed.pathname.toLowerCase().startsWith('/embed/');
-    return hasList && !hasVideoId;
-  } catch {
-    return false;
-  }
-}
-
 export function validateUrlForPlatform(
   url: string,
-  expectedPlatform: 'youtube' | 'youtube_playlist' | 'instagram' | 'facebook' | 'tiktok'
+  expectedPlatform: 'instagram' | 'facebook' | 'tiktok' | 'twitter' | 'vimeo' | 'dailymotion' | 'reddit' | 'pinterest'
 ): { valid: boolean; errorCode?: string; errorMessage?: string } {
   const v = (normalizeMediaUrl(url) || url).trim().toLowerCase();
 
-  const isYt = v.includes('youtube.com') || v.includes('youtu.be');
-  const isPlaylist = isYoutubePlaylistUrl(url);
   const isIg = v.includes('instagram.com');
   const isFb = v.includes('facebook.com') || v.includes('fb.watch');
   const isTt = v.includes('tiktok.com');
+  const isTw = v.includes('twitter.com') || v.includes('x.com');
+  const isVm = v.includes('vimeo.com');
+  const isDm = v.includes('dailymotion.com') || v.includes('dai.ly');
+  const isRd = v.includes('reddit.com') || v.includes('redd.it');
+  const isPin = v.includes('pinterest.com') || v.includes('pin.it');
 
-  if (expectedPlatform === 'tiktok') {
-    if (isPlaylist) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_PLAYLIST',
-        errorMessage: 'This is a YouTube Playlist link. Please use our YouTube Playlist Downloader tool.',
-      };
-    }
-    if (isYt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_YOUTUBE',
-        errorMessage: 'This is a YouTube link. Please use our YouTube Video Downloader tool.',
-      };
-    }
-    if (isIg) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_INSTAGRAM',
-        errorMessage: 'This is an Instagram link. Please use our Instagram Reel Downloader tool.',
-      };
-    }
-    if (isFb) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_FACEBOOK',
-        errorMessage: 'This is a Facebook link. Please use our Facebook Reel Downloader tool.',
-      };
-    }
+  if (expectedPlatform === 'tiktok' && !isTt) {
+    if (isIg) return { valid: false, errorMessage: 'This is an Instagram link. Please use our Instagram Downloader tool.' };
+    if (isFb) return { valid: false, errorMessage: 'This is a Facebook link. Please use our Facebook Downloader tool.' };
+    if (isTw) return { valid: false, errorMessage: 'This is a Twitter / X link. Please use our Twitter Downloader tool.' };
   }
 
-  if (expectedPlatform === 'youtube') {
-    if (isTt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_TIKTOK',
-        errorMessage: 'This is a TikTok link. Please use our TikTok Video Downloader tool.',
-      };
-    }
-    if (isPlaylist) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_PLAYLIST',
-        errorMessage: 'This is a YouTube Playlist link. Please use our YouTube Playlist Downloader tool.',
-      };
-    }
-    if (isIg) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_INSTAGRAM',
-        errorMessage: 'This is an Instagram link. Please use our Instagram Reel Downloader tool.',
-      };
-    }
-    if (isFb) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_FACEBOOK',
-        errorMessage: 'This is a Facebook link. Please use our Facebook Reel Downloader tool.',
-      };
-    }
+  if (expectedPlatform === 'instagram' && !isIg) {
+    if (isTt) return { valid: false, errorMessage: 'This is a TikTok link. Please use our TikTok Downloader tool.' };
+    if (isFb) return { valid: false, errorMessage: 'This is a Facebook link. Please use our Facebook Downloader tool.' };
   }
 
-  if (expectedPlatform === 'youtube_playlist') {
-    if (isTt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_TIKTOK',
-        errorMessage: 'This is a TikTok link. Please use our TikTok Video Downloader tool.',
-      };
-    }
-    if (isIg) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_INSTAGRAM',
-        errorMessage: 'This is an Instagram link. Please use our Instagram Reel Downloader tool.',
-      };
-    }
-    if (isFb) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_FACEBOOK',
-        errorMessage: 'This is a Facebook link. Please use our Facebook Reel Downloader tool.',
-      };
-    }
-    if (isYt && !isPlaylist) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_YOUTUBE_VIDEO',
-        errorMessage: 'This is a single YouTube video link. Please use our YouTube Video Downloader tool.',
-      };
-    }
+  if (expectedPlatform === 'facebook' && !isFb) {
+    if (isTt) return { valid: false, errorMessage: 'This is a TikTok link. Please use our TikTok Downloader tool.' };
+    if (isIg) return { valid: false, errorMessage: 'This is an Instagram link. Please use our Instagram Downloader tool.' };
   }
 
-  if (expectedPlatform === 'instagram') {
-    if (isTt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_TIKTOK',
-        errorMessage: 'This is a TikTok link. Please use our TikTok Video Downloader tool.',
-      };
-    }
-    if (isYt && isPlaylist) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_PLAYLIST',
-        errorMessage: 'This is a YouTube Playlist link. Please use our YouTube Playlist Downloader tool.',
-      };
-    }
-    if (isYt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_YOUTUBE',
-        errorMessage: 'This is a YouTube link. Please use our YouTube Video Downloader tool.',
-      };
-    }
-    if (isFb) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_FACEBOOK',
-        errorMessage: 'This is a Facebook link. Please use our Facebook Reel Downloader tool.',
-      };
-    }
+  if (expectedPlatform === 'twitter' && !isTw) {
+    if (isTt) return { valid: false, errorMessage: 'This is a TikTok link. Please use our TikTok Downloader tool.' };
+    if (isIg) return { valid: false, errorMessage: 'This is an Instagram link. Please use our Instagram Downloader tool.' };
   }
 
-  if (expectedPlatform === 'facebook') {
-    if (isTt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_TIKTOK',
-        errorMessage: 'This is a TikTok link. Please use our TikTok Video Downloader tool.',
-      };
-    }
-    if (isYt && isPlaylist) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_PLAYLIST',
-        errorMessage: 'This is a YouTube Playlist link. Please use our YouTube Playlist Downloader tool.',
-      };
-    }
-    if (isYt) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_YOUTUBE',
-        errorMessage: 'This is a YouTube link. Please use our YouTube Video Downloader tool.',
-      };
-    }
-    if (isIg) {
-      return {
-        valid: false,
-        errorCode: 'PLATFORM_MISMATCH_INSTAGRAM',
-        errorMessage: 'This is an Instagram link. Please use our Instagram Reel Downloader tool.',
-      };
-    }
+  if (expectedPlatform === 'vimeo' && !isVm) {
+    if (isTt || isIg || isFb) return { valid: false, errorMessage: 'Please paste a valid Vimeo video URL.' };
+  }
+
+  if (expectedPlatform === 'dailymotion' && !isDm) {
+    if (isTt || isIg || isFb) return { valid: false, errorMessage: 'Please paste a valid Dailymotion video URL.' };
+  }
+
+  if (expectedPlatform === 'reddit' && !isRd) {
+    if (isTt || isIg || isFb) return { valid: false, errorMessage: 'Please paste a valid Reddit post URL.' };
+  }
+
+  if (expectedPlatform === 'pinterest' && !isPin) {
+    if (isTt || isIg || isFb) return { valid: false, errorMessage: 'Please paste a valid Pinterest pin URL.' };
   }
 
   return { valid: true };
 }
+

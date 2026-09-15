@@ -1,26 +1,34 @@
 import React from 'react';
-import { Youtube, Instagram, Facebook, ListVideo, Video } from 'lucide-react';
+import { Twitter, Instagram, Facebook, Video, Play, Share2, Pin, MessageSquare } from 'lucide-react';
 
 interface PlatformIconProps {
-  platform: 'youtube' | 'youtube_playlist' | 'instagram' | 'facebook' | 'tiktok' | string;
+  platform: string;
   className?: string;
 }
 
 export const PlatformIcon: React.FC<PlatformIconProps> = ({ platform, className = "w-5 h-5" }) => {
-  switch (platform) {
-    case 'youtube':
-      return <Youtube className={`${className} text-[#FF0033]`} />;
-    case 'youtube_playlist':
-      return <ListVideo className={`${className} text-[#2563EB]`} />;
+  switch (platform.toLowerCase()) {
     case 'instagram':
       return <Instagram className={`${className} text-[#E4405F]`} />;
     case 'facebook':
       return <Facebook className={`${className} text-[#1877F2]`} />;
     case 'tiktok':
-      return <Video className={`${className} text-[#2563EB]`} />;
+      return <Video className={`${className} text-[#00F2FE]`} />;
+    case 'twitter':
+    case 'x':
+      return <Twitter className={`${className} text-[#1DA1F2]`} />;
+    case 'vimeo':
+      return <Play className={`${className} text-[#1AB7EA]`} />;
+    case 'dailymotion':
+      return <Share2 className={`${className} text-[#0066DC]`} />;
+    case 'reddit':
+      return <MessageSquare className={`${className} text-[#FF4500]`} />;
+    case 'pinterest':
+      return <Pin className={`${className} text-[#E60023]`} />;
     default:
       return <Video className={`${className} text-slate-500`} />;
   }
 };
+
 
 

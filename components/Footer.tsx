@@ -31,27 +31,47 @@ export const Footer: React.FC = () => {
           {/* Site Navigation (4 cols) */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
-              Navigation & Pages
+              Supported Platforms
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm font-semibold">
+            <ul className="grid grid-cols-2 gap-2 text-xs sm:text-sm font-semibold">
               <li>
-                <Link href="/" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
-                  Home
+                <Link href="/instagram" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Instagram
                 </Link>
               </li>
               <li>
-                <Link href="/platforms" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
-                  Supported Platforms
+                <Link href="/facebook" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Facebook
                 </Link>
               </li>
               <li>
-                <Link href="/formats" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
-                  Download Formats & Quality
+                <Link href="/tiktok" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  TikTok
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
-                  FAQ & Support
+                <Link href="/twitter" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Twitter / X
+                </Link>
+              </li>
+              <li>
+                <Link href="/vimeo" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Vimeo
+                </Link>
+              </li>
+              <li>
+                <Link href="/dailymotion" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Dailymotion
+                </Link>
+              </li>
+              <li>
+                <Link href="/reddit" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Reddit
+                </Link>
+              </li>
+              <li>
+                <Link href="/pinterest" className="text-slate-600 dark:text-zinc-400 hover:text-[#2563EB] dark:hover:text-[#3B82F6] transition-colors">
+                  Pinterest
                 </Link>
               </li>
             </ul>

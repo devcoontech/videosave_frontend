@@ -1,7 +1,15 @@
 import React from 'react';
 import { PlatformIcon } from './PlatformIcon';
 
-export type PlatformType = 'youtube' | 'youtube_playlist' | 'instagram' | 'facebook' | 'tiktok';
+export type PlatformType =
+  | 'instagram'
+  | 'facebook'
+  | 'tiktok'
+  | 'twitter'
+  | 'vimeo'
+  | 'dailymotion'
+  | 'reddit'
+  | 'pinterest';
 
 interface PlatformSelectorProps {
   activePlatform: PlatformType;
@@ -13,12 +21,16 @@ export const PlatformSelector: React.FC<PlatformSelectorProps> = ({
   onSelectPlatform,
 }) => {
   const platforms: { id: PlatformType; label: string }[] = [
-    // { id: 'youtube', label: 'YouTube' },
-    // { id: 'youtube_playlist', label: 'Playlist' },
     { id: 'instagram', label: 'Instagram' },
     { id: 'facebook', label: 'Facebook' },
     { id: 'tiktok', label: 'TikTok' },
+    { id: 'twitter', label: 'Twitter / X' },
+    { id: 'vimeo', label: 'Vimeo' },
+    { id: 'dailymotion', label: 'Dailymotion' },
+    { id: 'reddit', label: 'Reddit' },
+    { id: 'pinterest', label: 'Pinterest' },
   ];
+
 
   return (
     <div className="w-full flex justify-center mb-6">

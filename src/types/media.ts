@@ -13,7 +13,7 @@ export interface MediaFormat {
 
 export interface MediaInfo {
   success: boolean;
-  platform: 'youtube' | 'youtube_playlist' | 'instagram' | 'facebook' | 'unsupported';
+  platform: 'instagram' | 'facebook' | 'tiktok' | 'twitter' | 'vimeo' | 'dailymotion' | 'reddit' | 'pinterest' | 'unsupported';
   type: 'video' | 'reel' | 'playlist';
   id: string;
   title: string;

@@ -62,8 +62,8 @@ export const HomeClient: React.FC = () => {
     { name: 'X (Twitter)', color: 'bg-sky-500' },
     { name: 'Vimeo', color: 'bg-cyan-500' },
     { name: 'Dailymotion', color: 'bg-blue-500' },
+    { name: 'Reddit', color: 'bg-orange-600' },
     { name: 'Pinterest', color: 'bg-red-500' },
-    { name: '+6 more', color: 'bg-zinc-700' },
   ];
 
   return (

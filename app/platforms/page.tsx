@@ -53,7 +53,7 @@ export default function PlatformsPage() {
       name: 'Vimeo Video Downloader',
       color: 'from-cyan-500 to-blue-600',
       badge: 'Pro HD Quality',
-      description: 'Save Vimeo HD streams, filmmaking documentaries, and showcase videos in crisp 1080p and 2K resolution.',
+      description: 'Save Vimeo HD streams, filmmaking documentaries, and showcase videos in crisp 1080p and 4K resolution.',
       features: ['Uncompressed HD clarity', 'Stereo audio preservation', 'Fast bandwidth extraction', 'Unlimited usage'],
       example: 'https://vimeo.com/123456789',
     },
@@ -65,6 +65,24 @@ export default function PlatformsPage() {
       description: 'Download Dailymotion video streams, news clips, and trailers in high-definition MP4 format with audio.',
       features: ['Full HD resolution support', 'Instant link processing', 'No app installation required', 'Fast download speeds'],
       example: 'https://www.dailymotion.com/video/x8example',
+    },
+    {
+      id: 'reddit',
+      name: 'Reddit Video Downloader',
+      color: 'from-orange-500 to-red-600',
+      badge: 'Video + Audio Merged',
+      description: 'Download Reddit posts and v.redd.it videos with synced stereo audio in 1080p HD MP4 format.',
+      features: ['Merged audio track', 'HD v.redd.it support', 'Short app link support', 'Fast MP4 export'],
+      example: 'https://www.reddit.com/r/videos/comments/example/',
+    },
+    {
+      id: 'pinterest',
+      name: 'Pinterest Video Downloader',
+      color: 'from-red-600 to-pink-600',
+      badge: 'Clean Pin Video',
+      description: 'Save Pinterest pin videos and Idea Pins directly in original MP4 quality without watermark overlays.',
+      features: ['Clean pin extraction', 'Idea Pin support', 'Zero watermark', 'Mobile browser friendly'],
+      example: 'https://www.pinterest.com/pin/123456789/',
     },
   ];
 

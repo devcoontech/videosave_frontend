@@ -15,7 +15,7 @@ import { createDownload } from '../../services/api';
 import { validateUrlForPlatform } from '../../src/utils/helpers';
 import { downloadProgressLabel } from '../../src/utils/downloadLabels';
 
-export const YoutubeClient: React.FC = () => {
+export const TwitterClient: React.FC = () => {
   const { loading, mediaInfo, sourceUrl, error, fetchInfo, reset: resetInfo } = useMediaInfo();
   const [selectedFormatId, setSelectedFormatId] = useState<string>('best');
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
@@ -25,7 +25,7 @@ export const YoutubeClient: React.FC = () => {
   useAutoFileDownload(activeJobId, progressData);
 
   const handleFetch = (url: string) => {
-    const check = validateUrlForPlatform(url, 'youtube');
+    const check = validateUrlForPlatform(url, 'twitter');
     if (!check.valid) {
       setDownloadError({
         code: check.errorCode || 'PLATFORM_MISMATCH',
@@ -67,21 +67,21 @@ export const YoutubeClient: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-200/80 dark:border-red-900/50 text-red-600 dark:text-red-400 font-semibold text-xs shadow-xs">
-          <PlatformIcon platform="youtube" className="w-4 h-4" /> YouTube Video Downloader
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-500 font-bold text-xs">
+          <PlatformIcon platform="twitter" className="w-4 h-4" /> Twitter / X Saver
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-zinc-100 tracking-tight">
-          YouTube Video Downloader
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-zinc-100 tracking-tight">
+          Twitter / X Video Downloader
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-xl mx-auto">
-          Paste a YouTube video link and download it in your preferred resolution.
+          Download Twitter (X) videos and GIFs in HD MP4 quality instantly.
         </p>
       </div>
 
-      <div className="bg-white dark:bg-[#11131F] border border-slate-200/90 dark:border-zinc-800/90 rounded-3xl p-6 sm:p-9 shadow-xl shadow-slate-200/50 dark:shadow-2xl dark:shadow-black/50 space-y-6">
+      <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#1E2436] rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
         <UrlInput
-          placeholder="Paste YouTube video link..."
-          exampleUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          placeholder="Paste Twitter / X tweet link..."
+          exampleUrl="https://twitter.com/user/status/1234567890"
           buttonLabel="Fetch Video"
           isLoading={loading}
           onSubmit={handleFetch}
@@ -103,11 +103,7 @@ export const YoutubeClient: React.FC = () => {
             {activeJobId && (
               <ProgressBar
                 progress={progressData}
-                label={downloadProgressLabel(
-                  progressData?.status,
-                  selectedFormatId,
-                  progressData?.error,
-                )}
+                label={downloadProgressLabel(progressData?.status, selectedFormatId, progressData?.error)}
               />
             )}
           </div>
@@ -116,5 +112,3 @@ export const YoutubeClient: React.FC = () => {
     </div>
   );
 };
-
-
