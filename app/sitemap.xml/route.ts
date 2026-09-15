@@ -1,7 +1,9 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://videosave.site').replace(/\/$/, '');
+export async function GET(req: NextRequest) {
+  const host = req.headers.get('host') || 'videosave.site';
+  const protocol = req.headers.get('x-forwarded-proto') || 'https';
+  const baseUrl = `${protocol}://${host}`.replace(/\/$/, '');
   const lastModDate = new Date().toISOString().split('T')[0];
 
   const pages = [
